@@ -1,0 +1,3520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración - Vectoris Global</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script>
+    // Verificación simple de acceso
+    if (!window.location.search.includes('auth=1')) {
+      window.location.href = 'admin-login.html';
+    }
+  </script>
+  <style>
+    :root {
+      --azul-profundo: #0A2F44;
+      --azul-oscuro: #061F2E;
+      --acento-naranja: #F97316;
+      --acento-verde: #10B981;
+      --acento-rojo: #EF4444;
+      --acento-amarillo: #F59E0B;
+      --acento-azul: #3B82F6;
+      --acento-purpura: #8B5CF6;
+      --gris-profesional: #F5F5F4;
+      --gris-texto: #57534E;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #F3F4F6;
+      min-height: 100vh;
+    }
+    
+    .font-montserrat {
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    /* Layout */
+    .admin-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: var(--azul-profundo);
+      color: white;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    
+    .sidebar-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--azul-oscuro);
+    }
+    
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: white;
+    }
+    
+    .sidebar-logo svg {
+      width: 32px;
+      height: 32px;
+      color: var(--acento-naranja);
+    }
+    
+    .sidebar-logo span {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+    }
+    
+    .admin-badge {
+      background: var(--acento-naranja);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 8px;
+    }
+    
+    .nav-section {
+      padding: 16px 0;
+    }
+    
+    .nav-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #9CA3AF;
+      padding: 0 24px 8px;
+      letter-spacing: 0.5px;
+    }
+    
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 24px;
+      color: #D1D5DB;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      font-size: 14px;
+    }
+    
+    .nav-item:hover,
+    .nav-item.active {
+      background: var(--azul-oscuro);
+      color: white;
+    }
+    
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .nav-badge {
+      background: var(--acento-rojo);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-left: auto;
+    }
+    
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 260px;
+      padding: 24px;
+    }
+    
+    /* Top Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 16px 24px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .page-title h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      color: var(--azul-profundo);
+    }
+    
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .notification-btn {
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      color: var(--gris-texto);
+    }
+    
+    .notification-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .notification-badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: var(--acento-rojo);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      background: var(--acento-naranja);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+    
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    
+    @media (min-width: 640px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .stat-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .stat-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+    
+    .stat-icon.blue { background: #DBEAFE; color: var(--acento-azul); }
+    .stat-icon.green { background: #D1FAE5; color: var(--acento-verde); }
+    .stat-icon.orange { background: #FFEDD5; color: var(--acento-naranja); }
+    .stat-icon.purple { background: #EDE9FE; color: var(--acento-purpura); }
+    
+    .stat-content h3 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--azul-profundo);
+    }
+    
+    .stat-content p {
+      color: var(--gris-texto);
+      font-size: 14px;
+    }
+    
+    .stat-change {
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    
+    .stat-change.positive { color: var(--acento-verde); }
+    .stat-change.negative { color: var(--acento-rojo); }
+    
+    /* Content Cards */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    
+    @media (min-width: 1024px) {
+      .content-grid {
+        grid-template-columns: 2fr 1fr;
+      }
+    }
+    
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid #E5E7EB;
+    }
+    
+    .card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--azul-profundo);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s;
+    }
+    
+    .btn svg {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .btn-primary {
+      background: var(--acento-naranja);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #EA580C;
+    }
+    
+    .btn-secondary {
+      background: #F3F4F6;
+      color: #374151;
+    }
+    
+    .btn-secondary:hover {
+      background: #E5E7EB;
+    }
+    
+    .btn-success {
+      background: var(--acento-verde);
+      color: white;
+    }
+    
+    .btn-success:hover {
+      background: #059669;
+    }
+    
+    .btn-danger {
+      background: var(--acento-rojo);
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background: #DC2626;
+    }
+    
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+    
+    .card-body {
+      padding: 20px 24px;
+    }
+    
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th {
+      text-align: left;
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #6B7280;
+      background: #F9FAFB;
+      border-bottom: 1px solid #E5E7EB;
+    }
+    
+    td {
+      padding: 16px;
+      border-bottom: 1px solid #E5E7EB;
+      font-size: 14px;
+    }
+    
+    tbody tr:hover {
+      background: #F9FAFB;
+    }
+    
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .status-pending {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+    
+    .status-active {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+    
+    .status-inactive {
+      background: #FEE2E2;
+      color: #991B1B;
+    }
+    
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    
+    .status-dot.pending { background: #F59E0B; }
+    .status-dot.active { background: #10B981; }
+    .status-dot.inactive { background: #EF4444; }
+    
+    .actions-cell {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .action-btn {
+      padding: 6px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .action-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .action-btn.view { background: #DBEAFE; color: var(--acento-azul); }
+    .action-btn.edit { background: #FEF3C7; color: #92400E; }
+    .action-btn.delete { background: #FEE2E2; color: #991B1B; }
+    
+    /* Lists */
+    .list-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      border-bottom: 1px solid #E5E7EB;
+    }
+    
+    .list-item:last-child {
+      border-bottom: none;
+    }
+    
+    .list-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .list-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .list-content {
+      flex: 1;
+    }
+    
+    .list-content h4 {
+      font-weight: 600;
+      color: var(--azul-profundo);
+      margin-bottom: 4px;
+    }
+    
+    .list-content p {
+      font-size: 13px;
+      color: var(--gris-texto);
+    }
+    
+    .list-meta {
+      text-align: right;
+    }
+    
+    .list-meta span {
+      display: block;
+      font-size: 12px;
+      color: #6B7280;
+    }
+    
+    /* Quick Actions */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    
+    .quick-action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 20px;
+      background: #F9FAFB;
+      border: 2px dashed #D1D5DB;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    .quick-action-btn:hover {
+      border-color: var(--acento-naranja);
+      background: #FFEDD5;
+    }
+    
+    .quick-action-btn svg {
+      width: 32px;
+      height: 32px;
+      color: var(--acento-naranja);
+    }
+    
+    .quick-action-btn span {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--azul-profundo);
+    }
+    
+    /* Full Width Section */
+    .full-width-section {
+      margin-bottom: 24px;
+    }
+    
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #E5E7EB;
+      padding-bottom: 8px;
+    }
+    
+    .tab {
+      padding: 8px 16px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: #6B7280;
+      transition: all 0.3s;
+      border-radius: 6px;
+    }
+    
+    .tab:hover {
+      color: var(--azul-profundo);
+      background: #F3F4F6;
+    }
+    
+    .tab.active {
+      color: var(--acento-naranja);
+      background: #FFEDD5;
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* Tarifas Editor */
+    .tarifas-editor {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 24px;
+    }
+    
+    @media (min-width: 768px) {
+      .tarifas-editor {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    .tarifa-group {
+      background: #F9FAFB;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    
+    .tarifa-group h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--azul-profundo);
+    }
+    
+    .tarifa-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #E5E7EB;
+    }
+    
+    .tarifa-row:last-child {
+      border-bottom: none;
+    }
+    
+    .tarifa-input {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .tarifa-input input {
+      width: 80px;
+      padding: 8px 12px;
+      border: 1px solid #D1D5DB;
+      border-radius: 6px;
+      text-align: right;
+      font-size: 14px;
+    }
+    
+    /* Upload Zone */
+    .upload-zone {
+      border: 2px dashed #D1D5DB;
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      background: #F9FAFB;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .upload-zone:hover {
+      border-color: var(--acento-naranja);
+      background: #FFEDD5;
+    }
+    
+    .upload-zone svg {
+      width: 48px;
+      height: 48px;
+      color: var(--acento-naranja);
+      margin-bottom: 16px;
+    }
+    
+    .upload-zone h3 {
+      font-weight: 600;
+      color: var(--azul-profundo);
+      margin-bottom: 8px;
+    }
+    
+    .upload-zone p {
+      color: var(--gris-texto);
+      font-size: 14px;
+    }
+    
+    /* Mobile Menu Toggle */
+    .mobile-toggle {
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 200;
+      background: var(--azul-profundo);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    
+    @media (max-width: 1024px) {
+      .mobile-toggle {
+        display: block;
+      }
+      
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+      }
+      
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+    }
+    
+    /* Overlay */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 99;
+    }
+    
+    @media (max-width: 1024px) {
+      .sidebar-overlay.active {
+        display: block;
+      }
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal.active {
+      display: flex;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .modal-header {
+      padding: 24px 24px 16px;
+      border-bottom: 1px solid #E5E7EB;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .modal-header h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--azul-profundo);
+      margin: 0;
+    }
+    
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--gris-texto);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+    
+    .modal-close:hover {
+      background: #F3F4F6;
+      color: var(--azul-profundo);
+    }
+    
+    .modal-body {
+      padding: 24px;
+    }
+    
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid #E5E7EB;
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gris-texto);
+      margin-bottom: 6px;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #D1D5DB;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--acento-naranja);
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+    }
+    
+    .btn-danger {
+      background: var(--acento-rojo);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .btn-danger:hover {
+      background: #DC2626;
+    }
+    
+    .btn-secondary {
+      background: #6B7280;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .btn-secondary:hover {
+      background: #4B5563;
+    }
+    
+    .user-details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    
+    .user-detail-item {
+      padding: 12px;
+      background: #F9FAFB;
+      border-radius: 6px;
+    }
+    
+    .user-detail-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gris-texto);
+      margin-bottom: 4px;
+    }
+    
+    .user-detail-value {
+      font-size: 14px;
+      color: var(--azul-profundo);
+      font-weight: 500;
+    }
+    
+    .user-detail-item.full-width {
+      grid-column: 1 / -1;
+    }
+
+    /* Client List Selection Styles */
+    .client-selection-container {
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid #D1D5DB;
+      border-radius: 6px;
+      background: white;
+    }
+
+    .client-list {
+      padding: 8px;
+    }
+
+    .client-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      margin-bottom: 8px;
+      border: 1px solid #E5E7EB;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .client-item:hover {
+      background: #F9FAFB;
+      border-color: var(--acento-naranja);
+    }
+
+    .client-item.selected {
+      background: #FED7AA;
+      border-color: var(--acento-naranja);
+    }
+
+    .client-checkbox {
+      width: 18px;
+      height: 18px;
+      margin-right: 12px;
+      accent-color: var(--acento-naranja);
+    }
+
+    .client-info {
+      flex: 1;
+    }
+
+    .client-name {
+      font-weight: 500;
+      color: var(--azul-profundo);
+      margin-bottom: 2px;
+    }
+
+    .client-details {
+      font-size: 12px;
+      color: var(--gris-texto);
+    }
+
+    .client-list-item {
+      padding: 16px;
+      border: 1px solid #E5E7EB;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      background: white;
+    }
+
+    .client-list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .client-list-title {
+      font-weight: 600;
+      color: var(--azul-profundo);
+      font-size: 16px;
+    }
+
+    .client-list-description {
+      color: var(--gris-texto);
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .client-list-clients {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .client-chip {
+      background: #F3F4F6;
+      color: var(--gris-texto);
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .client-list-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-small {
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-edit-list {
+      background: var(--acento-azul);
+      color: white;
+    }
+
+    .btn-edit-list:hover {
+      background: #2563EB;
+    }
+
+    .btn-delete-list {
+      background: var(--acento-rojo);
+      color: white;
+    }
+
+    .btn-delete-list:hover {
+      background: #DC2626;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 32px;
+      color: var(--gris-texto);
+    }
+
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    /* Upload Areas Styles */
+    .upload-area {
+      background: #F9FAFB;
+      border: 1px solid #E5E7EB;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: border-color 0.3s;
+    }
+
+    .upload-area:hover {
+      border-color: var(--acento-naranja);
+    }
+
+    .upload-area h4 {
+      color: var(--azul-profundo);
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .upload-area p {
+      color: var(--gris-texto);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .file-upload-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .collect-section {
+      text-align: center;
+      margin: 32px 0;
+      padding: 24px;
+      background: linear-gradient(135deg, #FED7AA 0%, #FDBA74 100%);
+      border-radius: 12px;
+    }
+
+    .btn-large {
+      padding: 16px 32px;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-large:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .guide-info-section {
+      margin: 32px 0;
+    }
+
+    .guide-info-section h4 {
+      color: var(--azul-profundo);
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .guide-list-item {
+      background: white;
+      border: 1px solid #E5E7EB;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .guide-list-item:hover {
+      border-color: var(--acento-naranja);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .guide-list-header {
+      background: #F9FAFB;
+      padding: 16px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    .guide-list-header:hover {
+      background: #F3F4F6;
+    }
+
+    .guide-list-title {
+      font-weight: 600;
+      color: var(--azul-profundo);
+      font-size: 16px;
+    }
+
+    .guide-list-meta {
+      font-size: 12px;
+      color: var(--gris-texto);
+      margin-top: 4px;
+    }
+
+    .expand-icon {
+      transition: transform 0.3s;
+      color: var(--gris-texto);
+    }
+
+    .guide-list-item.expanded .expand-icon {
+      transform: rotate(180deg);
+    }
+
+    .guide-list-content {
+      display: none;
+      padding: 0;
+    }
+
+    .guide-list-item.expanded .guide-list-content {
+      display: block;
+    }
+
+    .guide-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .guide-table th {
+      background: #F9FAFB;
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--azul-profundo);
+      border-bottom: 2px solid #E5E7EB;
+    }
+
+    .guide-table td {
+      padding: 12px;
+      border-bottom: 1px solid #E5E7EB;
+      vertical-align: top;
+    }
+
+    .guide-table tr:hover {
+      background: #F9FAFB;
+    }
+
+    .dimension-info {
+      font-size: 12px;
+      color: var(--gris-texto);
+      line-height: 1.4;
+    }
+
+    .content-info {
+      font-size: 12px;
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .list-management-section {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px;
+      padding: 20px;
+      background: #F3F4F6;
+      border-radius: 8px;
+    }
+
+    .btn-success {
+      background: #10B981;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-success:hover {
+      background: #059669;
+    }
+
+    /* Load Codes Modal Styles */
+    .load-codes-list {
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #E5E7EB;
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+
+    .load-codes-item {
+      padding: 12px;
+      border-bottom: 1px solid #E5E7EB;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .load-codes-item:hover {
+      background: #F9FAFB;
+    }
+
+    .load-codes-item.selected {
+      background: #FED7AA;
+      border-color: var(--acento-naranja);
+    }
+
+    .load-codes-item:last-child {
+      border-bottom: none;
+    }
+
+    .load-codes-title {
+      font-weight: 600;
+      color: var(--azul-profundo);
+      margin-bottom: 4px;
+    }
+
+    .load-codes-meta {
+      font-size: 12px;
+      color: var(--gris-texto);
+    }
+  </style>
+</head>
+<body>
+  <button class="mobile-toggle" onclick="toggleSidebar()">
+    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+    </svg>
+  </button>
+  
+  <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span>VECTORIS<span style="color: var(--acento-naranja);">GLOBAL</span></span>
+          <span class="admin-badge">ADMIN</span>
+        </a>
+      </div>
+      
+      <nav class="nav-section">
+        <div class="nav-title">Principal</div>
+        <button class="nav-item active" onclick="showSection('dashboard')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+          </svg>
+          Dashboard
+        </button>
+        <button class="nav-item" onclick="showSection('solicitudes')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          Solicitudes
+          <span class="nav-badge">12</span>
+        </button>
+        <button class="nav-item" onclick="showSection('instrucciones')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+          </svg>
+          Instrucciones
+        </button>
+        <button class="nav-item" onclick="showSection('clientes')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm6-3a6 6 0 00-12 0v1h12v-1z"/>
+          </svg>
+          Clientes
+        </button>
+        <button class="nav-item" onclick="showSection('paquetes')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          Paquetes
+        </button>
+        
+        <div class="nav-title">Gestión</div>
+        <button class="nav-item" onclick="showSection('tarifas')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          Tarifas
+        </button>
+        <button class="nav-item" onclick="showSection('recursos-admin')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+          </svg>
+          Recursos
+        </button>
+        <button class="nav-item" onclick="showSection('reportes')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          Reportes
+        </button>
+        
+        <div class="nav-title">Configuración</div>
+        <button class="nav-item" onclick="showSection('notificaciones')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+          Notificaciones
+        </button>
+        <button class="nav-item" onclick="showSection('configuracion')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          Configuración
+        </button>
+        <a href="index.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+          </svg>
+          Cerrar Sesión
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="page-title">
+          <h1 id="page-title">Panel de Control</h1>
+        </div>
+        <div class="top-actions">
+          <button class="notification-btn">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+            <span class="notification-badge">5</span>
+          </button>
+          <div class="user-menu">
+            <span>Admin</span>
+            <div class="user-avatar">A</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Section -->
+      <section id="dashboard-section" class="section-content">
+        <!-- Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon blue">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3>1,247</h3>
+              <p>Paquetes este mes</p>
+              <span class="stat-change positive">↑ 12% vs mes anterior</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3>$45,280</h3>
+              <p>Ingresos este mes</p>
+              <span class="stat-change positive">↑ 8% vs mes anterior</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon orange">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm6-3a6 6 0 00-12 0v1h12v-1z"/>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3>892</h3>
+              <p>Clientes activos</p>
+              <span class="stat-change positive">↑ 24 nuevos</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon purple">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3>156</h3>
+              <p>Envíos pendientes</p>
+              <span class="stat-change negative">↑ 12 urgentes</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+          <!-- Recent Activity -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                Actividad Reciente
+              </h3>
+              <div class="card-actions">
+                <button class="btn btn-secondary btn-sm">Ver Todo</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="list-item">
+                <div class="list-icon" style="background: #D1FAE5; color: var(--acento-verde);">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                  </svg>
+                </div>
+                <div class="list-content">
+                  <h4>Nuevo cliente registrado</h4>
+                  <p>María González - Casillero #VE-2024-0891</p>
+                </div>
+                <div class="list-meta">
+                  <span>Hace 5 min</span>
+                </div>
+              </div>
+              <div class="list-item">
+                <div class="list-icon" style="background: #DBEAFE; color: var(--acento-azul);">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                  </svg>
+                </div>
+                <div class="list-content">
+                  <h4>Paquete recibido en Miami</h4>
+                  <p>Tracking: 1Z999AA1234567890 - Cliente: Juan Pérez</p>
+                </div>
+                <div class="list-meta">
+                  <span>Hace 15 min</span>
+                </div>
+              </div>
+              <div class="list-item">
+                <div class="list-icon" style="background: #FFEDD5; color: var(--acento-naranja);">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                  </svg>
+                </div>
+                <div class="list-content">
+                  <h4>Instrucción de envío pendiente</h4>
+                  <p>Cliente: Ana Rodríguez - Requiere aprobación</p>
+                </div>
+                <div class="list-meta">
+                  <span>Hace 1 hora</span>
+                </div>
+              </div>
+              <div class="list-item">
+                <div class="list-icon" style="background: #EDE9FE; color: var(--acento-purpura);">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                  </svg>
+                </div>
+                <div class="list-content">
+                  <h4>Pago confirmado</h4>
+                  <p>Factura #F-2024-0156 - $234.50 USD</p>
+                </div>
+                <div class="list-meta">
+                  <span>Hace 2 horas</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                Acciones Rápidas
+              </h3>
+            </div>
+            <div class="card-body">
+              <div class="quick-actions">
+                <button class="quick-action-btn" onclick="showSection('solicitudes')">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                  </svg>
+                  <span>Ver Solicitudes</span>
+                </button>
+                <button class="quick-action-btn" onclick="showSection('paquetes')">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                  </svg>
+                  <span>Cargar Paquetes</span>
+                </button>
+                <button class="quick-action-btn" onclick="showSection('tarifas')">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  <span>Editar Tarifas</span>
+                </button>
+                <button class="quick-action-btn" onclick="showSection('reportes')">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                  </svg>
+                  <span>Generar Reporte</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Packages -->
+        <div class="card full-width-section">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+              Paquetes Recientes
+            </h3>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-sm">Exportar Excel</button>
+              <button class="btn btn-primary btn-sm">Ver Todos</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Tracking</th>
+                    <th>Cliente</th>
+                    <th>Casillero</th>
+                    <th>Origen</th>
+                    <th>Peso</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>1Z999AA1234567890</strong></td>
+                    <td>Juan Pérez</td>
+                    <td>VE-2024-0089</td>
+                    <td>Miami, USA</td>
+                    <td>12.5 lbs</td>
+                    <td><span class="status-badge status-pending"><span class="status-dot pending"></span>En Bodega</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                      <button class="action-btn edit"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>9400111899562912345678</strong></td>
+                    <td>María González</td>
+                    <td>VE-2024-0156</td>
+                    <td>Shanghai, China</td>
+                    <td>8.2 lbs</td>
+                    <td><span class="status-badge status-active"><span class="status-dot active"></span>En Tránsito</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                      <button class="action-btn edit"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>1Z888BB9876543210</strong></td>
+                    <td>Carlos Rodríguez</td>
+                    <td>VE-2024-0034</td>
+                    <td>Miami, USA</td>
+                    <td>25.0 lbs</td>
+                    <td><span class="status-badge status-active"><span class="status-dot active"></span>Enviado a VEN</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                      <button class="action-btn edit"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Solicitudes Section -->
+      <section id="solicitudes-section" class="section-content" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              Solicitudes de Casillero
+            </h3>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-sm">Asignar Casilleros</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="tabs">
+              <button class="tab active" onclick="switchTab(this, 'pendientes')">Pendientes (12)</button>
+              <button class="tab" onclick="switchTab(this, 'aprobados')">Aprobados</button>
+              <button class="tab" onclick="switchTab(this, 'rechazados')">Rechazados</button>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Solicitud</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Teléfono</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#SOL-2024-0089</td>
+                    <td>María Elena González</td>
+                    <td>maria.gonzalez@email.com</td>
+                    <td>+58 414-1234567</td>
+                    <td>16/03/2024</td>
+                    <td><span class="status-badge status-pending"><span class="status-dot pending"></span>Pendiente</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view" title="Ver detalles"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                      <button class="action-btn edit" title="Aprobar"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></button>
+                      <button class="action-btn delete" title="Rechazar"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>#SOL-2024-0090</td>
+                    <td>Pedro Antonio Martínez</td>
+                    <td>pedro.martinez@email.com</td>
+                    <td>+58 412-9876543</td>
+                    <td>16/03/2024</td>
+                    <td><span class="status-badge status-pending"><span class="status-dot pending"></span>Pendiente</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view" title="Ver detalles"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                      <button class="action-btn edit" title="Aprobar"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></button>
+                      <button class="action-btn delete" title="Rechazar"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>#SOL-2024-0091</td>
+                    <td>Ana Carolina Rodríguez</td>
+                    <td>ana.rodriguez@email.com</td>
+                    <td>+58 424-4567890</td>
+                    <td>15/03/2024</td>
+                    <td><span class="status-badge status-pending"><span class="status-dot pending"></span>Pendiente</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view" title="Ver detalles"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                      <button class="action-btn edit" title="Aprobar"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></button>
+                      <button class="action-btn delete" title="Rechazar"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Instrucciones Section -->
+      <section id="instrucciones-section" class="section-content" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+              </svg>
+              Cargar Códigos para Clientes
+            </h3>
+          </div>
+          <div class="card-body">
+            <!-- Área 1: Cargar Excel de Guías -->
+            <div class="upload-area">
+              <h4>📋 Cargar Excel de Guías</h4>
+              <p>Extrae número de guía, casillero, peso en lb, lb/volumen, volumen cuft, fecha de llegada y creación</p>
+              <div class="file-upload-container">
+                <input type="file" id="guiasFile" accept=".xlsx,.xls,.csv" style="display: none;">
+                <button class="btn btn-secondary" onclick="document.getElementById('guiasFile').click()">
+                  📁 Cargar Excel de Guías
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="clearFile('guiasFile')" style="display: none;" id="clearGuiasBtn">
+                  🗑️ Eliminar
+                </button>
+                <span id="guiasFileName" style="margin-left: 10px; color: var(--gris-texto);"></span>
+              </div>
+            </div>
+
+            <!-- Área 2: Cargar Excel de Medidas -->
+            <div class="upload-area">
+              <h4>📏 Cargar Excel de Medidas de Piezas</h4>
+              <p>Extrae medidas en pulgadas de cada pieza y peso de cada caja</p>
+              <div class="file-upload-container">
+                <input type="file" id="medidasFile" accept=".xlsx,.xls,.csv" style="display: none;">
+                <button class="btn btn-secondary" onclick="document.getElementById('medidasFile').click()">
+                  📁 Cargar Excel de Medidas
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="clearFile('medidasFile')" style="display: none;" id="clearMedidasBtn">
+                  🗑️ Eliminar
+                </button>
+                <span id="medidasFileName" style="margin-left: 10px; color: var(--gris-texto);"></span>
+              </div>
+            </div>
+
+            <!-- Área 3: Cargar Excel de Tracking -->
+            <div class="upload-area">
+              <h4>🚚 Cargar Excel de Tracking</h4>
+              <p>Extrae números de tracking de las guías</p>
+              <div class="file-upload-container">
+                <input type="file" id="trackingFile" accept=".xlsx,.xls,.csv" style="display: none;">
+                <button class="btn btn-secondary" onclick="document.getElementById('trackingFile').click()">
+                  📁 Cargar Excel de Tracking
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="clearFile('trackingFile')" style="display: none;" id="clearTrackingBtn">
+                  🗑️ Eliminar
+                </button>
+                <span id="trackingFileName" style="margin-left: 10px; color: var(--gris-texto);"></span>
+              </div>
+            </div>
+
+            <!-- Área 4: Cargar Excel de Contenido -->
+            <div class="upload-area">
+              <h4>📦 Cargar Excel de Contenido de Paquetes</h4>
+              <p>Extrae el contenido detallado de cada tracking o número de guía</p>
+              <div class="file-upload-container">
+                <input type="file" id="contenidoFile" accept=".xlsx,.xls,.csv" style="display: none;">
+                <button class="btn btn-secondary" onclick="document.getElementById('contenidoFile').click()">
+                  📁 Cargar Excel de Contenido
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="clearFile('contenidoFile')" style="display: none;" id="clearContenidoBtn">
+                  🗑️ Eliminar
+                </button>
+                <span id="contenidoFileName" style="margin-left: 10px; color: var(--gris-texto);"></span>
+              </div>
+            </div>
+
+            <!-- Botón de Recolectar Información -->
+            <div class="collect-section">
+              <button class="btn btn-primary btn-large" onclick="collectInformation()">
+                🔍 Recolectar Información
+              </button>
+            </div>
+
+            <!-- Lista de Información de Guías -->
+            <div class="guide-info-section">
+              <h4>📋 Información de Guías para Clientes</h4>
+              <div id="guideListsContainer">
+                <div class="empty-state">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                  </svg>
+                  <p>No hay información de guías procesada</p>
+                  <small>Carga los archivos Excel y haz clic en "Recolectar Información"</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botones de Gestión de Listas -->
+            <div class="list-management-section">
+              <button class="btn btn-success" onclick="showLoadCodesModal()">
+                📤 Cargar Códigos a Clientes
+              </button>
+              <button class="btn btn-danger" onclick="showDeleteListModal()">
+                🗑️ Eliminar Lista
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Paquetes Section -->
+      <section id="paquetes-section" class="section-content" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+              </svg>
+              Carga Masiva de Paquetes
+            </h3>
+          </div>
+          <div class="card-body">
+            <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+              </svg>
+              <h3>Arrastra archivos Excel aquí</h3>
+              <p>o haz clic para seleccionar archivos<br>Formato: .xlsx, .xls, .csv</p>
+              <input type="file" id="fileInput" style="display: none;" accept=".xlsx,.xls,.csv">
+            </div>
+            <div style="margin-top: 24px;">
+              <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 700; margin-bottom: 16px; color: var(--azul-profundo);">Formato requerido:</h4>
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Columna</th>
+                      <th>Descripción</th>
+                      <th>Ejemplo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>A</td>
+                      <td>Tracking Number</td>
+                      <td>1Z999AA1234567890</td>
+                    </tr>
+                    <tr>
+                      <td>B</td>
+                      <td>Casillero Cliente</td>
+                      <td>VE-2024-0089</td>
+                    </tr>
+                    <tr>
+                      <td>C</td>
+                      <td>Peso (lbs)</td>
+                      <td>12.5</td>
+                    </tr>
+                    <tr>
+                      <td>D</td>
+                      <td>Dimensiones (LxAxA)</td>
+                      <td>12x10x8</td>
+                    </tr>
+                    <tr>
+                      <td>E</td>
+                      <td>Descripción</td>
+                      <td>Ropa y accesorios</td>
+                    </tr>
+                    <tr>
+                      <td>F</td>
+                      <td>Origen</td>
+                      <td>Miami / Shanghai</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div style="margin-top: 24px; text-align: center;">
+              <button class="btn btn-secondary">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                </svg>
+                Descargar Plantilla
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tarifas Section -->
+      <section id="tarifas-section" class="section-content" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Configuración de Tarifas
+            </h3>
+            <div class="card-actions">
+              <button class="btn btn-primary" onclick="guardarTarifas()">Guardar Cambios</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="tarifas-editor">
+              <div class="tarifa-group">
+                <h4>✈️ Tarifas Aéreas (por libra)</h4>
+                <div class="tarifa-row">
+                  <span>1 - 10 lbs</span>
+                  <div class="tarifa-input">
+                    <span>$</span>
+                    <input type="number" value="5.50" step="0.01">
+                  </div>
+                </div>
+                <div class="tarifa-row">
+                  <span>11 - 20 lbs</span>
+                  <div class="tarifa-input">
+                    <span>$</span>
+                    <input type="number" value="5.25" step="0.01">
+                  </div>
+                </div>
+                <div class="tarifa-row">
+                  <span>21 - 50 lbs</span>
+                  <div class="tarifa-input">
+                    <span>$</span>
+                    <input type="number" value="5.00" step="0.01">
+                  </div>
+                </div>
+                <div class="tarifa-row">
+                  <span>51 - 100 lbs</span>
+                  <div class="tarifa-input">
+                    <span>$</span>
+                    <input type="number" value="4.75" step="0.01">
+                  </div>
+                </div>
+                <div class="tarifa-row">
+                  <span>100+ lbs</span>
+                  <div class="tarifa-input">
+                    <span>$</span>
+                    <input type="number" value="4.50" step="0.01">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tarifa-group">
+                <h4>🚢 Tarifas Marítimas (por pie cúbico)</h4>
+                <div class="tarifa-row">
+                  <span>0 - 5 ft³</span>
+                  <div class="tarifa-input">
+                    <span>$</span>
+                    <input type="number" value="29.50" step="0.01">
+                  </div>
+                </div>
+                <div class="tarifa-row">
+                  <span>5 - 10 ft³</span>
+                  <div class="tarifa-input">
+                    <span>$</span>
+                    <input type="number" value="28.00" step="0.01">
+                  </div>
+                </div>
+                <div class="tarifa-row">
+                  <span>10 - 20 ft³</span>
+                  <div class="tarifa-input">
+                    <span>$</span>
+                    <input type="number" value="26.50" step="0.01">
+                  </div>
+                </div>
+                <div class="tarifa-row">
+                  <span>20+ ft³</span>
+                  <div class="tarifa-input">
+                    <span>$</span>
+                    <input type="number" value="25.00" step="0.01">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div style="margin-top: 32px; padding: 20px; background: #FEF3C7; border-radius: 8px;">
+              <p style="font-weight: 600; color: #92400E; margin-bottom: 8px;">⚠️ Nota importante:</p>
+              <p style="color: #92400E; font-size: 14px;">Los cambios en las tarifas afectarán a todos los envíos futuros. Los envíos ya registrados mantendrán las tarifas vigentes al momento de su registro.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Clientes Section -->
+      <section id="clientes-section" class="section-content" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm6-3a6 6 0 00-12 0v1h12v-1z"/>
+              </svg>
+              Gestión de Clientes
+            </h3>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-sm" onclick="viewClientLists()">Ver Listas</button>
+              <button class="btn btn-primary btn-sm" onclick="openCreateListModal()">Crear Lista</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Casillero</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Teléfono</th>
+                    <th>Paquetes</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>VE-2024-0089</strong></td>
+                    <td>Juan Pérez</td>
+                    <td>juan.perez@email.com</td>
+                    <td>+58 414-1234567</td>
+                    <td>23</td>
+                    <td><span class="status-badge status-active"><span class="status-dot active"></span>Activo</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                      <button class="action-btn edit"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>VE-2024-0156</strong></td>
+                    <td>María González</td>
+                    <td>maria.gonzalez@email.com</td>
+                    <td>+58 412-9876543</td>
+                    <td>15</td>
+                    <td><span class="status-badge status-active"><span class="status-dot active"></span>Activo</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                      <button class="action-btn edit"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>VE-2024-0034</strong></td>
+                    <td>Carlos Rodríguez</td>
+                    <td>carlos.rodriguez@email.com</td>
+                    <td>+58 424-4567890</td>
+                    <td>8</td>
+                    <td><span class="status-badge status-inactive"><span class="status-dot inactive"></span>Inactivo</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                      <button class="action-btn edit"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reportes Section -->
+      <section id="reportes-section" class="section-content" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              Reportes y Estadísticas
+            </h3>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-sm">Exportar PDF</button>
+              <button class="btn btn-secondary btn-sm">Exportar Excel</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="quick-actions" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 32px;">
+              <button class="quick-action-btn">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+                <span>Envíos por Mes</span>
+              </button>
+              <button class="quick-action-btn">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span>Ingresos</span>
+              </button>
+              <button class="quick-action-btn">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                <span>Clientes Activos</span>
+              </button>
+              <button class="quick-action-btn">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                </svg>
+                <span>Historial</span>
+              </button>
+            </div>
+            
+            <div style="text-align: center; padding: 60px; color: var(--gris-texto);">
+              <svg width="64" height="64" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: 16px; opacity: 0.5;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              </svg>
+              <p>Selecciona un tipo de reporte para visualizar los datos</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recursos Admin Section -->
+      <section id="recursos-admin-section" class="section-content" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+              </svg>
+              Gestión de Recursos Educativos
+            </h3>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-sm">+ Nuevo Recurso</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Título</th>
+                    <th>Tipo</th>
+                    <th>Acceso</th>
+                    <th>Vistas</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Cómo comprar en Amazon</td>
+                    <td>Video</td>
+                    <td>Público</td>
+                    <td>1,234</td>
+                    <td><span class="status-badge status-active"><span class="status-dot active"></span>Publicado</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                      <button class="action-btn edit"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+                      <button class="action-btn delete"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Guía de primer envío</td>
+                    <td>PDF</td>
+                    <td>Público</td>
+                    <td>892</td>
+                    <td><span class="status-badge status-active"><span class="status-dot active"></span>Publicado</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                      <button class="action-btn edit"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+                      <button class="action-btn delete"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- User Details Modal -->
+  <div class="modal" id="userDetailsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>📋 Detalles del Usuario</h3>
+        <button class="modal-close" onclick="closeModal('userDetailsModal')">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body" id="userDetailsContent">
+        <!-- User details will be populated here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Assign Locker Modal -->
+  <div class="modal" id="assignLockerModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>📦 Asignar Casillero</h3>
+        <button class="modal-close" onclick="closeModal('assignLockerModal')">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Número de Casillero</label>
+          <input type="text" id="lockerNumber" placeholder="Ej: VE-2024-1234" class="form-control">
+          <div class="error-message" id="locker-error"></div>
+        </div>
+        <div class="form-group">
+          <label>Dirección de Envío en Miami</label>
+          <textarea id="miamiAddress" rows="3" class="form-control" readonly>7300 NW 79th St, Miami, FL 33166, USA
+Attn: [CASILLERO]
+Tel: +1 (786) 555-0123</textarea>
+        </div>
+        <div class="form-group">
+          <label>Notas Adicionales</label>
+          <textarea id="additionalNotes" rows="2" class="form-control" placeholder="Instrucciones especiales para el cliente..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('assignLockerModal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="confirmAssignLocker()">Confirmar Asignación</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal" id="confirmModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="confirmTitle">⚠️ Confirmar Acción</h3>
+        <button class="modal-close" onclick="closeModal('confirmModal')">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="confirmMessage">¿Estás seguro de realizar esta acción?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('confirmModal')">Cancelar</button>
+        <button class="btn btn-danger" id="confirmButton">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Client List Modal -->
+  <div class="modal" id="createListModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>📝 Crear Nueva Lista</h3>
+        <button class="modal-close" onclick="closeModal('createListModal')">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Nombre de la Lista</label>
+          <input type="text" id="listName" placeholder="Ej: Clientes VIP, Envíos Diciembre" class="form-control">
+          <div class="error-message" id="listName-error"></div>
+        </div>
+        <div class="form-group">
+          <label>Descripción</label>
+          <textarea id="listDescription" rows="2" class="form-control" placeholder="Descripción opcional de la lista..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Buscar y Seleccionar Clientes</label>
+          <input type="text" id="clientSearch" placeholder="Buscar por nombre o número de casillero..." class="form-control" oninput="searchClients()">
+          <div class="error-message" id="clientSearch-error"></div>
+        </div>
+        <div class="form-group">
+          <label>Clientes Disponibles</label>
+          <div class="client-selection-container">
+            <div class="client-list" id="availableClients">
+              <!-- Available clients will be populated here -->
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Clientes Seleccionados (<span id="selectedCount">0</span>)</label>
+          <div class="client-selection-container">
+            <div class="client-list" id="selectedClients">
+              <!-- Selected clients will be populated here -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('createListModal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="createClientList()">Crear Lista</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client Lists Modal -->
+  <div class="modal" id="clientListsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>📋 Mis Listas de Clientes</h3>
+        <button class="modal-close" onclick="closeModal('clientListsModal')">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="clientListsContainer">
+          <!-- Client lists will be populated here -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('clientListsModal')">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load Codes to Clients Modal -->
+  <div class="modal" id="loadCodesModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>📤 Cargar Códigos a Clientes</h3>
+        <button class="modal-close" onclick="closeModal('loadCodesModal')">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Selecciona una lista para cargar a los clientes</label>
+          <div class="load-codes-list" id="loadCodesList">
+            <!-- Lists will be populated here -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('loadCodesModal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="loadCodesToClients()">Cargar a Clientes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete List Modal -->
+  <div class="modal" id="deleteListModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>🗑️ Eliminar Lista</h3>
+        <button class="modal-close" onclick="closeModal('deleteListModal')">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Selecciona una lista para eliminar</label>
+          <div class="load-codes-list" id="deleteListList">
+            <!-- Lists will be populated here -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('deleteListModal')">Cancelar</button>
+        <button class="btn btn-danger" onclick="deleteSelectedList()">Eliminar Lista</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Mobile sidebar toggle
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('overlay').classList.toggle('active');
+    }
+
+    // Section navigation
+    function showSection(sectionName) {
+      // Hide all sections
+      document.querySelectorAll('.section-content').forEach(section => {
+        section.style.display = 'none';
+      });
+      
+      // Show selected section
+      const selectedSection = document.getElementById(sectionName + '-section');
+      if (selectedSection) {
+        selectedSection.style.display = 'block';
+      }
+      
+      // Update active nav item
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      event.target.closest('.nav-item').classList.add('active');
+      
+      // Update page title
+      const titles = {
+        'dashboard': 'Panel de Control',
+        'solicitudes': 'Solicitudes de Casillero',
+        'instrucciones': 'Instrucciones de Clientes',
+        'clientes': 'Gestión de Clientes',
+        'paquetes': 'Carga de Paquetes',
+        'tarifas': 'Configuración de Tarifas',
+        'recursos-admin': 'Gestión de Recursos',
+        'reportes': 'Reportes y Estadísticas',
+        'notificaciones': 'Notificaciones',
+        'configuracion': 'Configuración'
+      };
+      document.getElementById('page-title').textContent = titles[sectionName] || 'Panel de Control';
+      
+      // Close mobile sidebar
+      if (window.innerWidth <= 1024) {
+        toggleSidebar();
+      }
+    }
+
+    // Tab switching
+    function switchTab(tabElement, tabName) {
+      // Remove active from all tabs
+      tabElement.parentElement.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Add active to clicked tab
+      tabElement.classList.add('active');
+    }
+
+    // Guardar tarifas
+    function guardarTarifas() {
+      alert('Tarifas guardadas exitosamente');
+    }
+
+    // File upload simulation
+    document.getElementById('fileInput')?.addEventListener('change', function(e) {
+      if (e.target.files.length > 0) {
+        alert('Archivo seleccionado: ' + e.target.files[0].name + '\nProcesando...');
+      }
+    });
+
+    // Global variables
+    let currentRequestId = null;
+    let pendingRequests = [];
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      loadPendingRequests();
+      updateRequestCounts();
+    });
+
+    // Load pending requests from localStorage
+    function loadPendingRequests() {
+      pendingRequests = JSON.parse(localStorage.getItem('pendingRequests') || '[]');
+      renderPendingRequests();
+    }
+
+    // Render pending requests in table
+    function renderPendingRequests() {
+      const tbody = document.querySelector('#solicitudes-section tbody');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+
+      pendingRequests.forEach((request, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>#SOL-${request.id}</td>
+          <td>${request.nombre}</td>
+          <td>${request.correo}</td>
+          <td>${request.telefono}</td>
+          <td>${new Date(request.createdAt).toLocaleDateString('es-VE')}</td>
+          <td><span class="status-badge status-pending"><span class="status-dot pending"></span>Pendiente</span></td>
+          <td class="actions-cell">
+            <button class="action-btn view" title="Ver detalles" onclick="viewUserDetails(${index})">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+            </button>
+            <button class="action-btn edit" title="Aprobar" onclick="openAssignLockerModal(${index})">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+            </button>
+            <button class="action-btn delete" title="Rechazar" onclick="rejectRequest(${index})">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      // Update pending count
+      const pendingTab = document.querySelector('.tab.active');
+      if (pendingTab) {
+        pendingTab.textContent = `Pendientes (${pendingRequests.length})`;
+      }
+    }
+
+    // Update request counts
+    function updateRequestCounts() {
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const approved = users.filter(u => u.status === 'approved' && u.lockerNumber).length;
+      const rejected = users.filter(u => u.status === 'rejected').length;
+      
+      // Update tab counts
+      document.querySelectorAll('.tab').forEach((tab, index) => {
+        if (index === 0) tab.textContent = `Pendientes (${pendingRequests.length})`;
+        if (index === 1) tab.textContent = `Aprobados (${approved})`;
+        if (index === 2) tab.textContent = `Rechazados (${rejected})`;
+      });
+    }
+
+    // Modal functions
+    function openModal(modalId) {
+      document.getElementById(modalId).classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // View user details
+    function viewUserDetails(index) {
+      const request = pendingRequests[index];
+      if (!request) return;
+
+      const detailsContent = document.getElementById('userDetailsContent');
+      detailsContent.innerHTML = `
+        <div class="user-details-grid">
+          <div class="user-detail-item">
+            <div class="user-detail-label">Nombre Completo</div>
+            <div class="user-detail-value">${request.nombre}</div>
+          </div>
+          <div class="user-detail-item">
+            <div class="user-detail-label">Cédula/Pasaporte</div>
+            <div class="user-detail-value">${request.cedula}</div>
+          </div>
+          <div class="user-detail-item">
+            <div class="user-detail-label">Teléfono</div>
+            <div class="user-detail-value">${request.telefono}</div>
+          </div>
+          <div class="user-detail-item">
+            <div class="user-detail-label">Correo Electrónico</div>
+            <div class="user-detail-value">${request.correo}</div>
+          </div>
+          <div class="user-detail-item">
+            <div class="user-detail-label">Nombre de Usuario</div>
+            <div class="user-detail-value">${request.usuario}</div>
+          </div>
+          <div class="user-detail-item">
+            <div class="user-detail-label">Ciudad</div>
+            <div class="user-detail-value">${request.ciudad}</div>
+          </div>
+          <div class="user-detail-item">
+            <div class="user-detail-label">Estado</div>
+            <div class="user-detail-value">${request.estado}</div>
+          </div>
+          <div class="user-detail-item">
+            <div class="user-detail-label">Fecha de Registro</div>
+            <div class="user-detail-value">${new Date(request.createdAt).toLocaleString('es-VE')}</div>
+          </div>
+          <div class="user-detail-item full-width">
+            <div class="user-detail-label">Dirección en Venezuela</div>
+            <div class="user-detail-value">${request.direccion}</div>
+          </div>
+          <div class="user-detail-item full-width">
+            <div class="user-detail-label">Pregunta de Seguridad 1</div>
+            <div class="user-detail-value">${request.pregunta1}</div>
+          </div>
+          <div class="user-detail-item full-width">
+            <div class="user-detail-label">Respuesta 1</div>
+            <div class="user-detail-value">${request.respuesta1}</div>
+          </div>
+          <div class="user-detail-item full-width">
+            <div class="user-detail-label">Pregunta de Seguridad 2</div>
+            <div class="user-detail-value">${request.pregunta2}</div>
+          </div>
+          <div class="user-detail-item full-width">
+            <div class="user-detail-label">Respuesta 2</div>
+            <div class="user-detail-value">${request.respuesta2}</div>
+          </div>
+        </div>
+      `;
+
+      openModal('userDetailsModal');
+    }
+
+    // Open assign locker modal
+    function openAssignLockerModal(index) {
+      currentRequestId = index;
+      const request = pendingRequests[index];
+      
+      // Clear previous values
+      document.getElementById('lockerNumber').value = '';
+      document.getElementById('additionalNotes').value = '';
+      document.getElementById('locker-error').textContent = '';
+      
+      // Update Miami address with placeholder
+      const miamiAddress = document.getElementById('miamiAddress');
+      miamiAddress.value = `7300 NW 79th St, Miami, FL 33166, USA
+Attn: [CASILLERO-${request.nombre}]
+Tel: +1 (786) 555-0123`;
+
+      openModal('assignLockerModal');
+    }
+
+    // Confirm assign locker
+    function confirmAssignLocker() {
+      const lockerNumber = document.getElementById('lockerNumber').value.trim();
+      const additionalNotes = document.getElementById('additionalNotes').value.trim();
+      const lockerError = document.getElementById('locker-error');
+
+      if (!lockerNumber) {
+        lockerError.textContent = 'El número de casillero es requerido';
+        return;
+      }
+
+      if (!/^VE-[0-9]{4}-[0-9]{4}$/.test(lockerNumber)) {
+        lockerError.textContent = 'Formato inválido. Use: VE-YYYY-NNNN';
+        return;
+      }
+
+      const request = pendingRequests[currentRequestId];
+      
+      // Update user status in localStorage
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      const userIndex = users.findIndex(u => u.correo === request.correo);
+      
+      if (userIndex !== -1) {
+        users[userIndex].status = 'approved';
+        users[userIndex].lockerNumber = lockerNumber;
+        users[userIndex].approvedAt = new Date().toISOString();
+        users[userIndex].miamiAddress = document.getElementById('miamiAddress').value.replace('[CASILLERO]', lockerNumber);
+        users[userIndex].additionalNotes = additionalNotes;
+      }
+
+      localStorage.setItem('users', JSON.stringify(users));
+
+      // Remove from pending requests
+      pendingRequests.splice(currentRequestId, 1);
+      localStorage.setItem('pendingRequests', JSON.stringify(pendingRequests));
+
+      // Simulate sending email
+      simulateEmailNotification(request, lockerNumber);
+
+      // Close modal and refresh
+      closeModal('assignLockerModal');
+      renderPendingRequests();
+      updateRequestCounts();
+
+      alert(`Casillero ${lockerNumber} asignado exitosamente a ${request.nombre}`);
+    }
+
+    // Simulate email notification
+    function simulateEmailNotification(request, lockerNumber) {
+      console.log('=== CORREO ELECTRÓNICO ENVIADO ===');
+      console.log('Para:', request.correo);
+      console.log('Asunto: ¡Tu Casillero Vectoris Global ha sido asignado!');
+      console.log('Cuerpo del correo:');
+      console.log(`
+Estimado/a ${request.nombre},
+
+¡Buenas noticias! Tu solicitud de casillero ha sido aprobada.
+
+Datos de tu casillero:
+Número: ${lockerNumber}
+Dirección de envío en Miami:
+7300 NW 79th St, Miami, FL 33166, USA
+Attn: ${lockerNumber}
+Tel: +1 (786) 555-0123
+
+Instrucciones:
+1. Usa esta dirección para tus compras en línea
+2. Incluye tu nombre completo y número de casillero
+3. Te notificaremos cuando lleguen tus paquetes
+
+Para hacer seguimiento a tus envíos, ingresa a tu panel en:
+https://vectorisglobal.com/dashboard
+
+¡Gracias por confiar en Vectoris Global!
+
+Atentamente,
+El equipo de Vectoris Global
+      `);
+      console.log('================================');
+    }
+
+    // Reject request
+    function rejectRequest(index) {
+      currentRequestId = index;
+      const request = pendingRequests[index];
+
+      document.getElementById('confirmTitle').innerHTML = '⚠️ Rechazar Solicitud';
+      document.getElementById('confirmMessage').textContent = `¿Estás seguro de rechazar la solicitud de casillero de ${request.nombre}? Esta acción no se puede deshacer.`;
+      
+      const confirmBtn = document.getElementById('confirmButton');
+      confirmBtn.textContent = 'Rechazar';
+      confirmBtn.className = 'btn btn-danger';
+      confirmBtn.onclick = confirmRejectRequest;
+
+      openModal('confirmModal');
+    }
+
+    // Confirm reject request
+    function confirmRejectRequest() {
+      const request = pendingRequests[currentRequestId];
+      
+      // Update user status in localStorage
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      const userIndex = users.findIndex(u => u.correo === request.correo);
+      
+      if (userIndex !== -1) {
+        users[userIndex].status = 'rejected';
+        users[userIndex].rejectedAt = new Date().toISOString();
+      }
+
+      localStorage.setItem('users', JSON.stringify(users));
+
+      // Remove from pending requests
+      pendingRequests.splice(currentRequestId, 1);
+      localStorage.setItem('pendingRequests', JSON.stringify(pendingRequests));
+
+      // Close modal and refresh
+      closeModal('confirmModal');
+      renderPendingRequests();
+      updateRequestCounts();
+
+      alert(`Solicitud de ${request.nombre} ha sido rechazada.`);
+    }
+
+    // Tab switching
+    function switchTab(tabElement, tabName) {
+      // Remove active class from all tabs
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Add active class to clicked tab
+      tabElement.classList.add('active');
+      
+      // Here you would typically filter the table based on the selected tab
+      // For now, we'll just show a message
+      if (tabName === 'aprobados') {
+        alert('Mostrando solicitudes aprobadas');
+      } else if (tabName === 'rechazados') {
+        alert('Mostrando solicitudes rechazadas');
+      }
+    }
+
+    // Client List Management
+    let selectedClientsForList = new Set();
+    let allClients = [];
+
+    // Load approved clients
+    function loadApprovedClients() {
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      allClients = users.filter(user => user.status === 'approved' && user.lockerNumber);
+      return allClients;
+    }
+
+    // Open create list modal
+    function openCreateListModal() {
+      selectedClientsForList.clear();
+      loadApprovedClients();
+      
+      // Clear form
+      document.getElementById('listName').value = '';
+      document.getElementById('listDescription').value = '';
+      document.getElementById('clientSearch').value = '';
+      document.getElementById('listName-error').textContent = '';
+      document.getElementById('clientSearch-error').textContent = '';
+      
+      // Populate available clients
+      renderAvailableClients(allClients);
+      renderSelectedClients([]);
+      
+      openModal('createListModal');
+    }
+
+    // Search clients
+    function searchClients() {
+      const searchTerm = document.getElementById('clientSearch').value.toLowerCase();
+      
+      if (!searchTerm) {
+        renderAvailableClients(allClients);
+        return;
+      }
+      
+      const filteredClients = allClients.filter(client => 
+        client.nombre.toLowerCase().includes(searchTerm) ||
+        (client.lockerNumber && client.lockerNumber.toLowerCase().includes(searchTerm)) ||
+        client.correo.toLowerCase().includes(searchTerm)
+      );
+      
+      renderAvailableClients(filteredClients);
+    }
+
+    // Render available clients
+    function renderAvailableClients(clients) {
+      const container = document.getElementById('availableClients');
+      
+      if (clients.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <p>No se encontraron clientes</p>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = clients.map(client => `
+        <div class="client-item" onclick="toggleClientSelection('${client.correo}')">
+          <input type="checkbox" class="client-checkbox" 
+                 ${selectedClientsForList.has(client.correo) ? 'checked' : ''} 
+                 onchange="toggleClientSelection('${client.correo}')">
+          <div class="client-info">
+            <div class="client-name">${client.nombre}</div>
+            <div class="client-details">
+              ${client.lockerNumber || 'Sin casillero'} • ${client.correo}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render selected clients
+    function renderSelectedClients(selectedClientEmails) {
+      const container = document.getElementById('selectedClients');
+      const selectedClients = allClients.filter(client => selectedClientEmails.includes(client.correo));
+      
+      document.getElementById('selectedCount').textContent = selectedClients.length;
+      
+      if (selectedClients.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <p>No has seleccionado ningún cliente</p>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = selectedClients.map(client => `
+        <div class="client-item selected">
+          <input type="checkbox" class="client-checkbox" checked 
+                 onchange="toggleClientSelection('${client.correo}')">
+          <div class="client-info">
+            <div class="client-name">${client.nombre}</div>
+            <div class="client-details">
+              ${client.lockerNumber || 'Sin casillero'} • ${client.correo}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Toggle client selection
+    function toggleClientSelection(clientEmail) {
+      if (selectedClientsForList.has(clientEmail)) {
+        selectedClientsForList.delete(clientEmail);
+      } else {
+        selectedClientsForList.add(clientEmail);
+      }
+      
+      renderAvailableClients(allClients);
+      renderSelectedClients(Array.from(selectedClientsForList));
+    }
+
+    // Create client list
+    function createClientList() {
+      const listName = document.getElementById('listName').value.trim();
+      const listDescription = document.getElementById('listDescription').value.trim();
+      const listNameError = document.getElementById('listName-error');
+      const clientSearchError = document.getElementById('clientSearch-error');
+
+      // Validate
+      if (!listName) {
+        listNameError.textContent = 'El nombre de la lista es requerido';
+        return;
+      }
+
+      if (selectedClientsForList.size === 0) {
+        clientSearchError.textContent = 'Debes seleccionar al menos un cliente';
+        return;
+      }
+
+      // Get existing lists
+      let clientLists = JSON.parse(localStorage.getItem('clientLists') || '[]');
+      
+      // Create new list
+      const newList = {
+        id: Date.now(),
+        name: listName,
+        description: listDescription,
+        clients: Array.from(selectedClientsForList).map(email => {
+          const client = allClients.find(c => c.correo === email);
+          return {
+            email: client.correo,
+            name: client.nombre,
+            lockerNumber: client.lockerNumber
+          };
+        }),
+        createdAt: new Date().toISOString(),
+        createdBy: 'admin'
+      };
+
+      clientLists.push(newList);
+      localStorage.setItem('clientLists', JSON.stringify(clientLists));
+
+      closeModal('createListModal');
+      alert(`Lista "${listName}" creada exitosamente con ${selectedClientsForList.size} clientes`);
+      
+      // Refresh clients section if visible
+      if (document.getElementById('clientes-section').style.display !== 'none') {
+        loadClientsSection();
+      }
+    }
+
+    // View client lists
+    function viewClientLists() {
+      const clientLists = JSON.parse(localStorage.getItem('clientLists') || '[]');
+      const container = document.getElementById('clientListsContainer');
+
+      if (clientLists.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+            <p>No tienes listas de clientes creadas</p>
+            <button class="btn btn-primary" onclick="closeModal('clientListsModal'); openCreateListModal();">
+              Crear Primera Lista
+            </button>
+          </div>
+        `;
+        openModal('clientListsModal');
+        return;
+      }
+
+      container.innerHTML = clientLists.map(list => `
+        <div class="client-list-item">
+          <div class="client-list-header">
+            <div class="client-list-title">${list.name}</div>
+            <div class="client-list-actions">
+              <button class="btn-small btn-edit-list" onclick="editClientList(${list.id})">Editar</button>
+              <button class="btn-small btn-delete-list" onclick="deleteClientList(${list.id})">Eliminar</button>
+            </div>
+          </div>
+          ${list.description ? `<div class="client-list-description">${list.description}</div>` : ''}
+          <div class="client-list-clients">
+            ${list.clients.map(client => `
+              <span class="client-chip">${client.name} (${client.lockerNumber || 'Sin casillero'})</span>
+            `).join('')}
+          </div>
+          <div style="font-size: 12px; color: var(--gris-texto);">
+            Creada el ${new Date(list.createdAt).toLocaleDateString('es-VE')} • ${list.clients.length} clientes
+          </div>
+        </div>
+      `).join('');
+
+      openModal('clientListsModal');
+    }
+
+    // Delete client list
+    function deleteClientList(listId) {
+      const clientLists = JSON.parse(localStorage.getItem('clientLists') || '[]');
+      const list = clientLists.find(l => l.id === listId);
+      
+      if (!list) return;
+
+      document.getElementById('confirmTitle').innerHTML = '🗑️ Eliminar Lista';
+      document.getElementById('confirmMessage').textContent = `¿Estás seguro de eliminar la lista "${list.name}"? Esta acción no se puede deshacer.`;
+      
+      const confirmBtn = document.getElementById('confirmButton');
+      confirmBtn.textContent = 'Eliminar';
+      confirmBtn.className = 'btn btn-danger';
+      confirmBtn.onclick = function() {
+        const updatedLists = clientLists.filter(l => l.id !== listId);
+        localStorage.setItem('clientLists', JSON.stringify(updatedLists));
+        
+        closeModal('confirmModal');
+        viewClientLists(); // Refresh the lists modal
+        alert('Lista eliminada exitosamente');
+      };
+
+      openModal('confirmModal');
+    }
+
+    // Edit client list (simplified - just shows the list details)
+    function editClientList(listId) {
+      const clientLists = JSON.parse(localStorage.getItem('clientLists') || '[]');
+      const list = clientLists.find(l => l.id === listId);
+      
+      if (!list) return;
+
+      alert(`Función de edición para la lista "${list.name}" estará disponible próximamente.`);
+    }
+
+    // Load clients section with real data
+    function loadClientsSection() {
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const approvedUsers = users.filter(user => user.status === 'approved' && user.lockerNumber);
+      const tbody = document.querySelector('#clientes-section tbody');
+      
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+
+      approvedUsers.forEach(user => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><strong>${user.lockerNumber}</strong></td>
+          <td>${user.nombre}</td>
+          <td>${user.correo}</td>
+          <td>${user.telefono}</td>
+          <td>${Math.floor(Math.random() * 50)}</td>
+          <td><span class="status-badge status-active"><span class="status-dot active"></span>Activo</span></td>
+          <td class="actions-cell">
+            <button class="action-btn view" onclick="viewUserDetailsFromClients('${user.correo}')">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+            </button>
+            <button class="action-btn edit" onclick="editClient('${user.correo}')">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+              </svg>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // View user details from clients section
+    function viewUserDetailsFromClients(email) {
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.correo === email);
+      
+      if (!user) return;
+
+      const detailsContent = document.getElementById('userDetailsContent');
+      detailsContent.innerHTML = `
+        <div class="user-details-grid">
+          <div class="user-detail-item">
+            <div class="user-detail-label">Nombre Completo</div>
+            <div class="user-detail-value">${user.nombre}</div>
+          </div>
+          <div class="user-detail-item">
+            <div class="user-detail-label">Cédula/Pasaporte</div>
+            <div class="user-detail-value">${user.cedula}</div>
+          </div>
+          <div class="user-detail-item">
+            <div class="user-detail-label">Teléfono</div>
+            <div class="user-detail-value">${user.telefono}</div>
+          </div>
+          <div class="user-detail-item">
+            <div class="user-detail-label">Correo Electrónico</div>
+            <div class="user-detail-value">${user.correo}</div>
+          </div>
+          <div class="user-detail-item">
+            <div class="user-detail-label">Nombre de Usuario</div>
+            <div class="user-detail-value">${user.usuario}</div>
+          </div>
+          <div class="user-detail-item">
+            <div class="user-detail-label">Casillero</div>
+            <div class="user-detail-value">${user.lockerNumber || 'No asignado'}</div>
+          </div>
+          <div class="user-detail-item">
+            <div class="user-detail-label">Ciudad</div>
+            <div class="user-detail-value">${user.ciudad}</div>
+          </div>
+          <div class="user-detail-item">
+            <div class="user-detail-label">Estado</div>
+            <div class="user-detail-value">${user.estado}</div>
+          </div>
+          <div class="user-detail-item">
+            <div class="user-detail-label">Fecha de Registro</div>
+            <div class="user-detail-value">${new Date(user.createdAt).toLocaleString('es-VE')}</div>
+          </div>
+          ${user.approvedAt ? `
+          <div class="user-detail-item">
+            <div class="user-detail-label">Fecha de Aprobación</div>
+            <div class="user-detail-value">${new Date(user.approvedAt).toLocaleString('es-VE')}</div>
+          </div>` : ''}
+          <div class="user-detail-item full-width">
+            <div class="user-detail-label">Dirección en Venezuela</div>
+            <div class="user-detail-value">${user.direccion}</div>
+          </div>
+          ${user.miamiAddress ? `
+          <div class="user-detail-item full-width">
+            <div class="user-detail-label">Dirección en Miami</div>
+            <div class="user-detail-value">${user.miamiAddress}</div>
+          </div>` : ''}
+          ${user.additionalNotes ? `
+          <div class="user-detail-item full-width">
+            <div class="user-detail-label">Notas Adicionales</div>
+            <div class="user-detail-value">${user.additionalNotes}</div>
+          </div>` : ''}
+        </div>
+      `;
+
+      openModal('userDetailsModal');
+    }
+
+    // Edit client (placeholder function)
+    function editClient(email) {
+      alert(`Función de edición para el cliente con email ${email} estará disponible próximamente.`);
+    }
+
+    // Update showSection to load clients when accessing that section
+    const originalShowSection = showSection;
+    showSection = function(sectionName) {
+      originalShowSection(sectionName);
+      
+      if (sectionName === 'clientes') {
+        loadClientsSection();
+      } else if (sectionName === 'instrucciones') {
+        loadGuideLists();
+      }
+    };
+
+    // Guide Management System
+    let uploadedFiles = {
+      guias: null,
+      medidas: null,
+      tracking: null,
+      contenido: null
+    };
+
+    let guideLists = [];
+    let selectedLoadList = null;
+    let selectedDeleteList = null;
+
+    // File upload handlers
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add file change listeners
+      document.getElementById('guiasFile')?.addEventListener('change', function(e) {
+        handleFileUpload(e, 'guias');
+      });
+      
+      document.getElementById('medidasFile')?.addEventListener('change', function(e) {
+        handleFileUpload(e, 'medidas');
+      });
+      
+      document.getElementById('trackingFile')?.addEventListener('change', function(e) {
+        handleFileUpload(e, 'tracking');
+      });
+      
+      document.getElementById('contenidoFile')?.addEventListener('change', function(e) {
+        handleFileUpload(e, 'contenido');
+      });
+    });
+
+    // Handle file upload
+    function handleFileUpload(event, fileType) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      uploadedFiles[fileType] = file;
+      
+      // Update UI
+      const fileNameSpan = document.getElementById(fileType + 'FileName');
+      const clearBtn = document.getElementById('clear' + fileType.charAt(0).toUpperCase() + fileType.slice(1) + 'Btn');
+      
+      fileNameSpan.textContent = file.name;
+      clearBtn.style.display = 'inline-block';
+      
+      console.log(`Archivo ${fileType} cargado:`, file.name);
+    }
+
+    // Clear file
+    function clearFile(fileType) {
+      const fileInput = document.getElementById(fileType + 'File');
+      const fileNameSpan = document.getElementById(fileType + 'FileName');
+      const clearBtn = document.getElementById('clear' + fileType.charAt(0).toUpperCase() + fileType.slice(1) + 'Btn');
+      
+      fileInput.value = '';
+      fileNameSpan.textContent = '';
+      clearBtn.style.display = 'none';
+      uploadedFiles[fileType] = null;
+    }
+
+    // Collect information from uploaded files
+    function collectInformation() {
+      // Check if all files are uploaded
+      const requiredFiles = ['guias', 'medidas', 'tracking', 'contenido'];
+      const missingFiles = requiredFiles.filter(file => !uploadedFiles[file]);
+      
+      if (missingFiles.length > 0) {
+        alert('Por favor carga todos los archivos Excel requeridos:\n' + 
+              missingFiles.map(f => `• ${f.charAt(0).toUpperCase() + f.slice(1)}`).join('\n'));
+        return;
+      }
+
+      // Simulate processing files and creating guide list
+      const guideList = {
+        id: Date.now(),
+        name: `Lista ${new Date().toLocaleDateString('es-VE')} ${new Date().toLocaleTimeString('es-VE')}`,
+        createdAt: new Date().toISOString(),
+        guides: generateSampleGuides() // This would normally process the actual Excel files
+      };
+
+      // Save to localStorage
+      guideLists.push(guideList);
+      localStorage.setItem('guideLists', JSON.stringify(guideLists));
+
+      // Clear uploaded files
+      requiredFiles.forEach(file => clearFile(file));
+
+      // Refresh display
+      loadGuideLists();
+
+      alert('Información recolectada exitosamente. Se ha creado una nueva lista de guías.');
+    }
+
+    // Generate sample guide data (this would normally process Excel files)
+    function generateSampleGuides() {
+      return [
+        {
+          fecha: '17/03/2026',
+          casillero: 'VE-2024-1515',
+          consignee: 'Daniel González',
+          piezas: 3,
+          pesoReal: 12.5,
+          pesoDimensional: 15.2,
+          volumen: 2.8,
+          dimensiones: 'Caja 1: 12x10x8, Caja 2: 15x12x10, Caja 3: 10x8x6',
+          pesoCajas: '4.2 lb, 5.1 lb, 3.2 lb',
+          contenido: 'Ropa, electrónicos, libros',
+          tracking: '1Z999AA10123456784'
+        },
+        {
+          fecha: '17/03/2026',
+          casillero: 'VE-2024-1516',
+          consignee: 'María Rodríguez',
+          piezas: 2,
+          pesoReal: 8.7,
+          pesoDimensional: 10.5,
+          volumen: 2.1,
+          dimensiones: 'Caja 1: 18x14x12, Caja 2: 16x12x10',
+          pesoCajas: '5.2 lb, 3.5 lb',
+          contenido: 'Cosméticos, accesorios',
+          tracking: '1Z999AA10123456785'
+        },
+        {
+          fecha: '16/03/2026',
+          casillero: 'VE-2024-1517',
+          consignee: 'Carlos Martínez',
+          piezas: 1,
+          pesoReal: 6.3,
+          pesoDimensional: 7.8,
+          volumen: 1.5,
+          dimensiones: 'Caja 1: 20x16x12',
+          pesoCajas: '6.3 lb',
+          contenido: 'Documentos, libros',
+          tracking: '1Z999AA10123456786'
+        }
+      ];
+    }
+
+    // Load guide lists
+    function loadGuideLists() {
+      guideLists = JSON.parse(localStorage.getItem('guideLists') || '[]');
+      renderGuideLists();
+    }
+
+    // Render guide lists
+    function renderGuideLists() {
+      const container = document.getElementById('guideListsContainer');
+      
+      if (guideLists.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+            <p>No hay información de guías procesada</p>
+            <small>Carga los archivos Excel y haz clic en "Recolectar Información"</small>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = guideLists.map(list => `
+        <div class="guide-list-item" id="guide-list-${list.id}">
+          <div class="guide-list-header" onclick="toggleGuideList(${list.id})">
+            <div>
+              <div class="guide-list-title">${list.name}</div>
+              <div class="guide-list-meta">
+                Creada: ${new Date(list.createdAt).toLocaleString('es-VE')} • 
+                ${list.guides.length} guías
+              </div>
+            </div>
+            <svg class="expand-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+          <div class="guide-list-content">
+            <table class="guide-table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Casillero</th>
+                  <th>Consignee</th>
+                  <th>Piezas</th>
+                  <th>Peso Real</th>
+                  <th>Peso Dim.</th>
+                  <th>Volumen</th>
+                  <th>Dimensiones</th>
+                  <th>Peso Cajas</th>
+                  <th>Contenido</th>
+                  <th>Tracking</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${list.guides.map(guide => `
+                  <tr>
+                    <td>${guide.fecha}</td>
+                    <td><strong>${guide.casillero}</strong></td>
+                    <td>${guide.consignee}</td>
+                    <td>${guide.piezas}</td>
+                    <td>${guide.pesoReal} lb</td>
+                    <td>${guide.pesoDimensional} lb</td>
+                    <td>${guide.volumen} cuft</td>
+                    <td><div class="dimension-info">${guide.dimensiones}</div></td>
+                    <td><div class="dimension-info">${guide.pesoCajas}</div></td>
+                    <td><div class="content-info" title="${guide.contenido}">${guide.contenido}</div></td>
+                    <td><strong>${guide.tracking}</strong></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Toggle guide list expansion
+    function toggleGuideList(listId) {
+      const listElement = document.getElementById(`guide-list-${listId}`);
+      listElement.classList.toggle('expanded');
+    }
+
+    // Show load codes modal
+    function showLoadCodesModal() {
+      selectedLoadList = null;
+      
+      if (guideLists.length === 0) {
+        alert('No hay listas de guías disponibles. Primero recolecta información.');
+        return;
+      }
+
+      const listContainer = document.getElementById('loadCodesList');
+      listContainer.innerHTML = guideLists.map(list => `
+        <div class="load-codes-item" onclick="selectLoadList(${list.id})">
+          <div class="load-codes-title">${list.name}</div>
+          <div class="load-codes-meta">
+            ${list.guides.length} guías • ${new Date(list.createdAt).toLocaleDateString('es-VE')}
+          </div>
+        </div>
+      `).join('');
+
+      openModal('loadCodesModal');
+    }
+
+    // Select load list
+    function selectLoadList(listId) {
+      selectedLoadList = listId;
+      
+      // Update UI
+      document.querySelectorAll('.load-codes-item').forEach(item => {
+        item.classList.remove('selected');
+      });
+      event.target.closest('.load-codes-item').classList.add('selected');
+    }
+
+    // Load codes to clients
+    function loadCodesToClients() {
+      if (!selectedLoadList) {
+        alert('Por favor selecciona una lista para cargar a los clientes.');
+        return;
+      }
+
+      const list = guideLists.find(l => l.id === selectedLoadList);
+      if (!list) return;
+
+      // Group guides by locker number
+      const guidesByLocker = {};
+      list.guides.forEach(guide => {
+        if (!guidesByLocker[guide.casillero]) {
+          guidesByLocker[guide.casillero] = [];
+        }
+        guidesByLocker[guide.casillero].push(guide);
+      });
+
+      // Save to client instructions
+      let clientInstructions = JSON.parse(localStorage.getItem('clientInstructions') || '[]');
+      
+      Object.keys(guidesByLocker).forEach(lockerNumber => {
+        const instruction = {
+          id: Date.now() + Math.random(),
+          lockerNumber: lockerNumber,
+          guides: guidesByLocker[lockerNumber],
+          createdAt: new Date().toISOString(),
+          loadedAt: new Date().toISOString()
+        };
+        clientInstructions.push(instruction);
+      });
+
+      localStorage.setItem('clientInstructions', JSON.stringify(clientInstructions));
+
+      closeModal('loadCodesModal');
+      alert(`Se han cargado las instrucciones a los clientes de ${Object.keys(guidesByLocker).length} casilleros.`);
+    }
+
+    // Show delete list modal
+    function showDeleteListModal() {
+      selectedDeleteList = null;
+      
+      if (guideLists.length === 0) {
+        alert('No hay listas de guías disponibles para eliminar.');
+        return;
+      }
+
+      const listContainer = document.getElementById('deleteListList');
+      listContainer.innerHTML = guideLists.map(list => `
+        <div class="load-codes-item" onclick="selectDeleteList(${list.id})">
+          <div class="load-codes-title">${list.name}</div>
+          <div class="load-codes-meta">
+            ${list.guides.length} guías • ${new Date(list.createdAt).toLocaleDateString('es-VE')}
+          </div>
+        </div>
+      `).join('');
+
+      openModal('deleteListModal');
+    }
+
+    // Select delete list
+    function selectDeleteList(listId) {
+      selectedDeleteList = listId;
+      
+      // Update UI
+      document.querySelectorAll('#deleteListList .load-codes-item').forEach(item => {
+        item.classList.remove('selected');
+      });
+      event.target.closest('.load-codes-item').classList.add('selected');
+    }
+
+    // Delete selected list
+    function deleteSelectedList() {
+      if (!selectedDeleteList) {
+        alert('Por favor selecciona una lista para eliminar.');
+        return;
+      }
+
+      const list = guideLists.find(l => l.id === selectedDeleteList);
+      if (!list) return;
+
+      if (confirm(`¿Estás seguro de eliminar la lista "${list.name}"? Esta acción no se puede deshacer.`)) {
+        guideLists = guideLists.filter(l => l.id !== selectedDeleteList);
+        localStorage.setItem('guideLists', JSON.stringify(guideLists));
+        
+        closeModal('deleteListModal');
+        loadGuideLists();
+        
+        alert('Lista eliminada exitosamente.');
+      }
+    }
+  </script>
+</body>
+</html>

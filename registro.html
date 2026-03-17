@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solicita tu Casillero - Vectoris Global</title>
+  <meta name="description" content="Solicita tu casillero gratis en Vectoris Global para envíos desde USA y China a Venezuela.">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --azul-profundo: #0A2F44;
+      --azul-oscuro: #061F2E;
+      --acento-naranja: #F97316;
+      --acento-verde: #10B981;
+      --gris-profesional: #F5F5F4;
+      --gris-texto: #57534E;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: white;
+      min-height: 100vh;
+    }
+    
+    .font-montserrat {
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    
+    /* Header */
+    header {
+      background: var(--azul-profundo);
+      color: white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: white;
+    }
+    
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      color: var(--acento-naranja);
+    }
+    
+    .logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+    }
+    
+    .logo-span {
+      color: var(--acento-naranja);
+    }
+    
+    nav.desktop-nav {
+      display: none;
+    }
+    
+    @media (min-width: 768px) {
+      nav.desktop-nav {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+    }
+    
+    nav.desktop-nav a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    nav.desktop-nav a:hover {
+      color: var(--acento-naranja);
+    }
+    
+    .btn-cta {
+      background: var(--acento-naranja);
+      color: white;
+      font-weight: 700;
+      padding: 8px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn-cta:hover {
+      background: #EA580C;
+    }
+    
+    .btn-cta-small {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+    
+    .mobile-menu-btn {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 8px;
+    }
+    
+    .mobile-menu-btn:hover {
+      color: var(--acento-naranja);
+    }
+    
+    @media (min-width: 768px) {
+      .mobile-menu-btn {
+        display: none;
+      }
+    }
+    
+    .mobile-nav {
+      display: none;
+      padding: 16px 0;
+      border-top: 1px solid var(--azul-oscuro);
+    }
+    
+    .mobile-nav.active {
+      display: block;
+    }
+    
+    .mobile-nav a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 8px 0;
+      transition: color 0.3s;
+    }
+    
+    .mobile-nav a:hover {
+      color: var(--acento-naranja);
+    }
+    
+    /* Main Content */
+    main {
+      padding: 64px 0;
+      min-height: calc(100vh - 64px - 400px);
+    }
+    
+    .page-title {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    
+    .page-title h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      color: var(--azul-profundo);
+    }
+    
+    @media (min-width: 768px) {
+      .page-title h1 {
+        font-size: 32px;
+      }
+    }
+    
+    .form-container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .form-box {
+      background: var(--gris-profesional);
+      border-radius: 16px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      padding: 32px;
+    }
+    
+    .form-section {
+      margin-bottom: 32px;
+    }
+    
+    .form-section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--azul-profundo);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .form-section-title svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    
+    @media (min-width: 768px) {
+      .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+    
+    .form-group label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gris-texto);
+      margin-bottom: 6px;
+    }
+    
+    .form-group input,
+    .form-group select {
+      padding: 12px 16px;
+      border: 1px solid #D1D5DB;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--acento-naranja);
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+    }
+    
+    .form-group input.error,
+    .form-group select.error {
+      border-color: #EF4444;
+    }
+    
+    .form-group select {
+      background: white;
+      cursor: pointer;
+    }
+    
+    .error-message {
+      color: #EF4444;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    
+    .checkbox-group input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--acento-naranja);
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    
+    .checkbox-group label {
+      font-size: 14px;
+      color: var(--gris-texto);
+      cursor: pointer;
+      margin: 0;
+    }
+    
+    .btn-submit {
+      width: 100%;
+      background: var(--acento-naranja);
+      color: white;
+      font-weight: 700;
+      padding: 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .btn-submit:hover {
+      background: #EA580C;
+    }
+    
+    .btn-submit:disabled {
+      background: #9CA3AF;
+      cursor: not-allowed;
+    }
+    
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid white;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .form-footer {
+      text-align: center;
+      margin-top: 24px;
+    }
+    
+    .form-footer p {
+      color: var(--gris-texto);
+    }
+    
+    .form-footer a {
+      color: var(--acento-naranja);
+      font-weight: 500;
+      text-decoration: none;
+    }
+    
+    .form-footer a:hover {
+      color: #EA580C;
+    }
+    
+    .help-text {
+      font-size: 14px;
+      color: var(--gris-texto);
+      margin-bottom: 16px;
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--azul-profundo);
+      color: white;
+    }
+    
+    .footer-content {
+      padding: 48px 0;
+    }
+    
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    
+    @media (min-width: 768px) {
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: 2fr 1fr 1fr;
+      }
+    }
+    
+    .footer-brand p {
+      color: #D1D5DB;
+      margin: 16px 0;
+      max-width: 400px;
+    }
+    
+    .footer-social {
+      display: flex;
+      gap: 16px;
+    }
+    
+    .footer-social a {
+      color: #D1D5DB;
+      transition: color 0.3s;
+    }
+    
+    .footer-social a:hover {
+      color: var(--acento-naranja);
+    }
+    
+    .footer-social svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .footer-links h3 {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 16px;
+      color: var(--acento-naranja);
+    }
+    
+    .footer-links ul {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 8px;
+    }
+    
+    .footer-links a {
+      color: #D1D5DB;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-links a:hover {
+      color: var(--acento-naranja);
+    }
+    
+    .footer-contact h3 {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 16px;
+      color: var(--acento-naranja);
+    }
+    
+    .footer-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #D1D5DB;
+      margin-bottom: 12px;
+    }
+    
+    .footer-contact-item svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+    
+    .footer-bottom {
+      border-top: 1px solid var(--azul-oscuro);
+      padding: 32px 0;
+    }
+    
+    .footer-bottom-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    @media (min-width: 768px) {
+      .footer-bottom-content {
+        flex-direction: row;
+      }
+    }
+    
+    .footer-bottom p {
+      color: #D1D5DB;
+      font-size: 14px;
+    }
+    
+    .footer-bottom-links {
+      display: flex;
+      gap: 24px;
+    }
+    
+    .footer-bottom-links a {
+      color: #D1D5DB;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+    
+    .footer-bottom-links a:hover {
+      color: var(--acento-naranja);
+    }
+    
+    /* Password Strength Styles */
+    .password-input-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    
+    .password-input-container input {
+      padding-right: 48px;
+    }
+    
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      color: var(--gris-texto);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      transition: color 0.3s;
+    }
+    
+    .toggle-password:hover {
+      color: var(--acento-naranja);
+    }
+    
+    .password-strength {
+      margin-top: 8px;
+      height: 4px;
+      background: #E5E7EB;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    
+    .password-strength-bar {
+      height: 100%;
+      transition: width 0.3s, background-color 0.3s;
+    }
+    
+    .password-strength-weak {
+      background: #EF4444;
+      width: 33%;
+    }
+    
+    .password-strength-medium {
+      background: #F59E0B;
+      width: 66%;
+    }
+    
+    .password-strength-strong {
+      background: #10B981;
+      width: 100%;
+    }
+    
+    .password-strength-text {
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    
+    .success-message {
+      color: var(--acento-verde);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+    
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal.active {
+      display: flex;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .modal-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    
+    .modal-header h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      color: var(--azul-profundo);
+      margin-bottom: 8px;
+    }
+    
+    .modal-header p {
+      color: var(--gris-texto);
+      font-size: 14px;
+    }
+    
+    .verification-code {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    
+    .code-input {
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+      border: 2px solid #D1D5DB;
+      border-radius: 8px;
+      transition: border-color 0.3s;
+    }
+    
+    .code-input:focus {
+      outline: none;
+      border-color: var(--acento-naranja);
+    }
+    
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    
+    .btn-modal {
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .btn-modal-primary {
+      background: var(--acento-naranja);
+      color: white;
+    }
+    
+    .btn-modal-primary:hover {
+      background: #EA580C;
+    }
+    
+    .btn-modal-secondary {
+      background: #E5E7EB;
+      color: var(--gris-texto);
+    }
+    
+    .btn-modal-secondary:hover {
+      background: #D1D5DB;
+    }
+    
+    .resend-code {
+      text-align: center;
+      margin-top: 16px;
+    }
+    
+    .resend-code button {
+      background: none;
+      border: none;
+      color: var(--acento-naranja);
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    
+    .resend-code button:hover {
+      color: #EA580C;
+    }
+    
+    .resend-code button:disabled {
+      color: #9CA3AF;
+      cursor: not-allowed;
+      text-decoration: none;
+    }
+    
+    /* WhatsApp Button */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 50;
+    }
+    
+    .whatsapp-btn {
+      background: #22C55E;
+      color: white;
+      padding: 16px;
+      border-radius: 50%;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+      text-decoration: none;
+    }
+    
+    .whatsapp-btn:hover {
+      background: #16A34A;
+    }
+    
+    .whatsapp-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">
+          <svg class="logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <div class="logo-text">VECTORIS<span class="logo-span"> GLOBAL</span></div>
+        </a>
+        
+        <nav class="desktop-nav">
+          <a href="index.html">Inicio</a>
+          <a href="tarifas.html">Tarifas</a>
+          <a href="recursos.html">Recursos</a>
+          <a href="login.html">Iniciar Sesión</a>
+          <a href="registro.html" class="btn-cta btn-cta-small">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+            </svg>
+            <span>CREAR CASILLERO</span>
+          </a>
+        </nav>
+        
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+          <svg id="menu-icon" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <svg id="close-icon" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="mobile-nav" id="mobile-nav">
+        <a href="index.html">Inicio</a>
+        <a href="tarifas.html">Tarifas</a>
+        <a href="recursos.html">Recursos</a>
+        <a href="login.html">Iniciar Sesión</a>
+        <a href="registro.html" class="btn-cta">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span>CREAR CASILLERO</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="page-title">
+        <h1>📝 SOLICITA TU CASILLERO GRATIS</h1>
+      </div>
+      
+      <div class="form-container">
+        <form class="form-box" id="registroForm" onsubmit="handleRegistro(event)">
+          <!-- Datos Personales -->
+          <div class="form-section">
+            <div class="form-section-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+              </svg>
+              <span>DATOS PERSONALES</span>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Nombre completo</label>
+                <input type="text" name="nombre" id="nombre" placeholder="Juan Pérez">
+                <div class="error-message" id="nombre-error"></div>
+              </div>
+              <div class="form-group">
+                <label>Cédula/Pasaporte</label>
+                <input type="text" name="cedula" id="cedula" placeholder="V-12345678">
+                <div class="error-message" id="cedula-error"></div>
+              </div>
+              <div class="form-group">
+                <label>Teléfono (WhatsApp)</label>
+                <input type="tel" name="telefono" id="telefono" placeholder="+58 414-1234567">
+                <div class="error-message" id="telefono-error"></div>
+              </div>
+              <div class="form-group">
+                <label>Correo electrónico</label>
+                <input type="email" name="correo" id="correo" placeholder="correo@ejemplo.com" onblur="validateEmail()">
+                <div class="error-message" id="correo-error"></div>
+              </div>
+              <div class="form-group">
+                <label>Nombre de usuario</label>
+                <input type="text" name="usuario" id="usuario" placeholder="usuario123" onblur="checkUsernameAvailability()">
+                <div class="error-message" id="usuario-error"></div>
+                <div class="success-message" id="usuario-success"></div>
+              </div>
+              <div class="form-group">
+                <label>Contraseña</label>
+                <div class="password-input-container">
+                  <input type="password" name="password" id="password" placeholder="Mínimo 8 caracteres" oninput="checkPasswordStrength()">
+                  <button type="button" class="toggle-password" onclick="togglePassword('password')">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="password-strength" id="password-strength"></div>
+                <div class="error-message" id="password-error"></div>
+              </div>
+              <div class="form-group">
+                <label>Confirmar contraseña</label>
+                <div class="password-input-container">
+                  <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Repite tu contraseña" oninput="checkPasswordMatch()">
+                  <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword')">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="error-message" id="confirmPassword-error"></div>
+              </div>
+              <div class="form-group full-width">
+                <label>Dirección en Venezuela</label>
+                <input type="text" name="direccion" id="direccion" placeholder="Avenida Principal #123, Urbanización XYZ">
+                <div class="error-message" id="direccion-error"></div>
+              </div>
+              <div class="form-group">
+                <label>Ciudad</label>
+                <input type="text" name="ciudad" id="ciudad" placeholder="Caracas">
+                <div class="error-message" id="ciudad-error"></div>
+              </div>
+              <div class="form-group">
+                <label>Estado</label>
+                <select name="estado" id="estado">
+                  <option value="">Selecciona</option>
+                  <option value="Amazonas">Amazonas</option>
+                  <option value="Anzoátegui">Anzoátegui</option>
+                  <option value="Apure">Apure</option>
+                  <option value="Aragua">Aragua</option>
+                  <option value="Barinas">Barinas</option>
+                  <option value="Bolívar">Bolívar</option>
+                  <option value="Carabobo">Carabobo</option>
+                  <option value="Cojedes">Cojedes</option>
+                  <option value="Delta Amacuro">Delta Amacuro</option>
+                  <option value="Distrito Capital">Distrito Capital</option>
+                  <option value="Falcón">Falcón</option>
+                  <option value="Guárico">Guárico</option>
+                  <option value="Lara">Lara</option>
+                  <option value="Mérida">Mérida</option>
+                  <option value="Miranda">Miranda</option>
+                  <option value="Monagas">Monagas</option>
+                  <option value="Nueva Esparta">Nueva Esparta</option>
+                  <option value="Portuguesa">Portuguesa</option>
+                  <option value="Sucre">Sucre</option>
+                  <option value="Táchira">Táchira</option>
+                  <option value="Trujillo">Trujillo</option>
+                  <option value="Vargas">Vargas</option>
+                  <option value="Yaracuy">Yaracuy</option>
+                  <option value="Zulia">Zulia</option>
+                </select>
+                <div class="error-message" id="estado-error"></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Preguntas de Seguridad -->
+          <div class="form-section">
+            <div class="form-section-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+              <span>🔐 PREGUNTAS DE SEGURIDAD</span>
+            </div>
+            <p class="help-text">(Estas preguntas te ayudarán a recuperar tu cuenta)</p>
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label>Pregunta 1</label>
+                <select name="pregunta1" id="pregunta1">
+                  <option value="">Selecciona una pregunta</option>
+                  <option value="¿Cuál es el nombre de tu primera mascota?">¿Cuál es el nombre de tu primera mascota?</option>
+                  <option value="¿Cuál es el nombre de tu ciudad natal?">¿Cuál es el nombre de tu ciudad natal?</option>
+                  <option value="¿Cuál fue el nombre de tu primera escuela?">¿Cuál fue el nombre de tu primera escuela?</option>
+                  <option value="¿Cuál es el segundo nombre de tu madre?">¿Cuál es el segundo nombre de tu madre?</option>
+                  <option value="¿Cuál es el nombre de tu mejor amigo de la infancia?">¿Cuál es el nombre de tu mejor amigo de la infancia?</option>
+                  <option value="¿Cuál es tu comida favorita?">¿Cuál es tu comida favorita?</option>
+                  <option value="¿Cuál es el modelo de tu primer carro?">¿Cuál es el modelo de tu primer carro?</option>
+                  <option value="¿En qué año naciste? (YYYY)">¿En qué año naciste? (YYYY)</option>
+                  <option value="¿Cuál es tu número de la suerte?">¿Cuál es tu número de la suerte?</option>
+                  <option value="¿Cuál es el nombre de tu profesor favorito?">¿Cuál es el nombre de tu profesor favorito?</option>
+                  <option value="¿Cuál es tu película favorita?">¿Cuál es tu película favorita?</option>
+                  <option value="¿Cuál es tu canción favorita?">¿Cuál es tu canción favorita?</option>
+                  <option value="¿Cómo se llamaba tu abuelo materno?">¿Cómo se llamaba tu abuelo materno?</option>
+                  <option value="¿Cuál es tu deporte favorito?">¿Cuál es tu deporte favorito?</option>
+                  <option value="¿Cuál es tu color favorito?">¿Cuál es tu color favorito?</option>
+                </select>
+                <div class="error-message" id="pregunta1-error"></div>
+              </div>
+              <div class="form-group full-width">
+                <label>Respuesta 1</label>
+                <input type="text" name="respuesta1" id="respuesta1" placeholder="Tu respuesta">
+                <div class="error-message" id="respuesta1-error"></div>
+              </div>
+              <div class="form-group full-width">
+                <label>Pregunta 2 (diferente)</label>
+                <select name="pregunta2" id="pregunta2">
+                  <option value="">Selecciona una pregunta (diferente)</option>
+                  <option value="¿Cuál es el nombre de tu primera mascota?">¿Cuál es el nombre de tu primera mascota?</option>
+                  <option value="¿Cuál es el nombre de tu ciudad natal?">¿Cuál es el nombre de tu ciudad natal?</option>
+                  <option value="¿Cuál fue el nombre de tu primera escuela?">¿Cuál fue el nombre de tu primera escuela?</option>
+                  <option value="¿Cuál es el segundo nombre de tu madre?">¿Cuál es el segundo nombre de tu madre?</option>
+                  <option value="¿Cuál es el nombre de tu mejor amigo de la infancia?">¿Cuál es el nombre de tu mejor amigo de la infancia?</option>
+                  <option value="¿Cuál es tu comida favorita?">¿Cuál es tu comida favorita?</option>
+                  <option value="¿Cuál es el modelo de tu primer carro?">¿Cuál es el modelo de tu primer carro?</option>
+                  <option value="¿En qué año naciste? (YYYY)">¿En qué año naciste? (YYYY)</option>
+                  <option value="¿Cuál es tu número de la suerte?">¿Cuál es tu número de la suerte?</option>
+                  <option value="¿Cuál es el nombre de tu profesor favorito?">¿Cuál es el nombre de tu profesor favorito?</option>
+                  <option value="¿Cuál es tu película favorita?">¿Cuál es tu película favorita?</option>
+                  <option value="¿Cuál es tu canción favorita?">¿Cuál es tu canción favorita?</option>
+                  <option value="¿Cómo se llamaba tu abuelo materno?">¿Cómo se llamaba tu abuelo materno?</option>
+                  <option value="¿Cuál es tu deporte favorito?">¿Cuál es tu deporte favorito?</option>
+                  <option value="¿Cuál es tu color favorito?">¿Cuál es tu color favorito?</option>
+                </select>
+                <div class="error-message" id="pregunta2-error"></div>
+              </div>
+              <div class="form-group full-width">
+                <label>Respuesta 2</label>
+                <input type="text" name="respuesta2" id="respuesta2" placeholder="Tu respuesta">
+                <div class="error-message" id="respuesta2-error"></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Términos -->
+          <div class="checkbox-group">
+            <input type="checkbox" id="terminos" name="terminos">
+            <label for="terminos">Acepto los términos y condiciones</label>
+          </div>
+          <div class="error-message" id="terminos-error" style="margin-bottom: 16px;"></div>
+          
+          <button type="submit" class="btn-submit" id="submit-btn">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>SOLICITAR CASILLERO</span>
+          </button>
+          
+          <div class="form-footer">
+            <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="logo">
+              <svg class="logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+              <div class="logo-text">VECTORIS<span class="logo-span"> GLOBAL</span></div>
+            </div>
+            <p>Tu aliado de confianza para envíos desde USA y China hacia Venezuela. Rápido, seguro y sin complicaciones.</p>
+            <div class="footer-social">
+              <a href="https://facebook.com" target="_blank" rel="noopener">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.468 2.373c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.122.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.122v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/>
+                </svg>
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noopener">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+          
+          <div class="footer-links">
+            <h3>Enlaces Rápidos</h3>
+            <ul>
+              <li><a href="tarifas.html">Tarifas</a></li>
+              <li><a href="recursos.html">Recursos</a></li>
+              <li><a href="login.html">Iniciar Sesión</a></li>
+              <li><a href="registro.html">Crear Casillero</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-contact">
+            <h3>Contacto</h3>
+            <div class="footer-contact-item">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+              </svg>
+              <span>+58 414-1234567</span>
+            </div>
+            <div class="footer-contact-item">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              <span>info@vectorisglobal.com</span>
+            </div>
+            <div class="footer-contact-item">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              <span>Caracas, Venezuela<br>Miami, FL, USA<br>Shanghai, China</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="footer-bottom-content">
+            <p>© 2024 Vectoris Global. Todos los derechos reservados.</p>
+            <div class="footer-bottom-links">
+              <a href="#">Términos y Condiciones</a>
+              <a href="#">Política de Privacidad</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="whatsapp-float">
+    <a href="https://wa.me/584141234567?text=Hola%20Vectoris%20Global,%20quiero%20información%20sobre%20sus%20servicios%20de%20envíos" class="whatsapp-btn" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+      <svg fill="currentColor" viewBox="0 0 24 24">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.123-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 001.171.008C.426 0 0 .425 0 .952v22.096c0 .527.426.952.952.952h22.096c.527 0 .952-.426.952-.952 0-5.921-2.298-11.485-6.471-15.658"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Email Verification Modal -->
+  <div class="modal" id="verificationModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>📧 Verifica tu correo</h2>
+        <p>Hemos enviado un código de verificación a tu correo electrónico</p>
+      </div>
+      <div class="verification-code">
+        <input type="text" class="code-input" maxlength="1" id="code1" oninput="moveToNext(this, 'code2')">
+        <input type="text" class="code-input" maxlength="1" id="code2" oninput="moveToNext(this, 'code3')">
+        <input type="text" class="code-input" maxlength="1" id="code3" oninput="moveToNext(this, 'code4')">
+        <input type="text" class="code-input" maxlength="1" id="code4" oninput="moveToNext(this, 'code5')">
+        <input type="text" class="code-input" maxlength="1" id="code5" oninput="moveToNext(this, 'code6')">
+        <input type="text" class="code-input" maxlength="1" id="code6" oninput="moveToNext(this, null)">
+      </div>
+      <div class="modal-buttons">
+        <button class="btn-modal btn-modal-secondary" onclick="closeVerificationModal()">Cancelar</button>
+        <button class="btn-modal btn-modal-primary" onclick="verifyCode()">Verificar</button>
+      </div>
+      <div class="resend-code">
+        <button id="resendBtn" onclick="resendCode()">Reenviar código</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Global variables
+    let verificationCode = '';
+    let pendingRegistrationData = null;
+    let resendTimer = null;
+    let resendCountdown = 60;
+    
+    // Simulated existing usernames (in real app, this would be from database)
+    const existingUsernames = ['admin', 'usuario1', 'test', 'demo', 'vectoris'];
+    
+    function toggleMobileMenu() {
+      const mobileNav = document.getElementById('mobile-nav');
+      const menuIcon = document.getElementById('menu-icon');
+      const closeIcon = document.getElementById('close-icon');
+      
+      mobileNav.classList.toggle('active');
+      
+      if (mobileNav.classList.contains('active')) {
+        menuIcon.style.display = 'none';
+        closeIcon.style.display = 'block';
+      } else {
+        menuIcon.style.display = 'block';
+        closeIcon.style.display = 'none';
+      }
+    }
+    
+    function validateEmail() {
+      const emailInput = document.getElementById('correo');
+      const emailError = document.getElementById('correo-error');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (!emailInput.value.trim()) {
+        emailError.textContent = 'El correo electrónico es requerido';
+        emailInput.classList.add('error');
+        return false;
+      }
+      
+      if (!emailRegex.test(emailInput.value)) {
+        emailError.textContent = 'El formato del correo no es válido';
+        emailInput.classList.add('error');
+        return false;
+      }
+      
+      emailError.textContent = '';
+      emailInput.classList.remove('error');
+      return true;
+    }
+    
+    function checkUsernameAvailability() {
+      const usernameInput = document.getElementById('usuario');
+      const usernameError = document.getElementById('usuario-error');
+      const usernameSuccess = document.getElementById('usuario-success');
+      const username = usernameInput.value.trim().toLowerCase();
+      
+      if (!username) {
+        usernameError.textContent = 'El nombre de usuario es requerido';
+        usernameSuccess.textContent = '';
+        usernameInput.classList.add('error');
+        return false;
+      }
+      
+      if (username.length < 3) {
+        usernameError.textContent = 'El nombre de usuario debe tener al menos 3 caracteres';
+        usernameSuccess.textContent = '';
+        usernameInput.classList.add('error');
+        return false;
+      }
+      
+      if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+        usernameError.textContent = 'Solo se permiten letras, números y guiones bajos';
+        usernameSuccess.textContent = '';
+        usernameInput.classList.add('error');
+        return false;
+      }
+      
+      // Simulate checking availability
+      setTimeout(() => {
+        if (existingUsernames.includes(username)) {
+          usernameError.textContent = 'Este nombre de usuario ya está en uso';
+          usernameSuccess.textContent = '';
+          usernameInput.classList.add('error');
+        } else {
+          usernameError.textContent = '';
+          usernameSuccess.textContent = '✓ Nombre de usuario disponible';
+          usernameInput.classList.remove('error');
+        }
+      }, 500);
+      
+      return true;
+    }
+    
+    function checkPasswordStrength() {
+      const passwordInput = document.getElementById('password');
+      const passwordError = document.getElementById('password-error');
+      const passwordStrength = document.getElementById('password-strength');
+      const password = passwordInput.value;
+      
+      if (!password) {
+        passwordError.textContent = 'La contraseña es requerida';
+        passwordStrength.innerHTML = '';
+        passwordInput.classList.add('error');
+        return false;
+      }
+      
+      if (password.length < 8) {
+        passwordError.textContent = 'La contraseña debe tener al menos 8 caracteres';
+        passwordStrength.innerHTML = '';
+        passwordInput.classList.add('error');
+        return false;
+      }
+      
+      // Calculate password strength
+      let strength = 0;
+      if (password.length >= 8) strength++;
+      if (password.length >= 12) strength++;
+      if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+      if (/\d/.test(password)) strength++;
+      if (/[^a-zA-Z\d]/.test(password)) strength++;
+      
+      let strengthClass = '';
+      let strengthText = '';
+      
+      if (strength <= 2) {
+        strengthClass = 'password-strength-weak';
+        strengthText = '<span style="color: #EF4444; font-size: 12px;">Débil</span>';
+      } else if (strength <= 3) {
+        strengthClass = 'password-strength-medium';
+        strengthText = '<span style="color: #F59E0B; font-size: 12px;">Media</span>';
+      } else {
+        strengthClass = 'password-strength-strong';
+        strengthText = '<span style="color: #10B981; font-size: 12px;">Fuerte</span>';
+      }
+      
+      passwordStrength.innerHTML = `
+        <div class="password-strength-bar ${strengthClass}"></div>
+        ${strengthText}
+      `;
+      
+      passwordError.textContent = '';
+      passwordInput.classList.remove('error');
+      return true;
+    }
+    
+    function checkPasswordMatch() {
+      const passwordInput = document.getElementById('password');
+      const confirmPasswordInput = document.getElementById('confirmPassword');
+      const confirmPasswordError = document.getElementById('confirmPassword-error');
+      
+      if (!confirmPasswordInput.value) {
+        confirmPasswordError.textContent = 'Por favor confirma tu contraseña';
+        confirmPasswordInput.classList.add('error');
+        return false;
+      }
+      
+      if (passwordInput.value !== confirmPasswordInput.value) {
+        confirmPasswordError.textContent = 'Las contraseñas no coinciden';
+        confirmPasswordInput.classList.add('error');
+        return false;
+      }
+      
+      confirmPasswordError.textContent = '';
+      confirmPasswordInput.classList.remove('error');
+      return true;
+    }
+    
+    function togglePassword(fieldId) {
+      const field = document.getElementById(fieldId);
+      const type = field.type === 'password' ? 'text' : 'password';
+      field.type = type;
+    }
+    
+    function generateVerificationCode() {
+      return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+    
+    function showVerificationModal() {
+      const modal = document.getElementById('verificationModal');
+      modal.classList.add('active');
+      
+      // Generate and store verification code
+      verificationCode = generateVerificationCode();
+      console.log('Código de verificación (simulado):', verificationCode);
+      
+      // Clear previous inputs
+      for (let i = 1; i <= 6; i++) {
+        document.getElementById(`code${i}`).value = '';
+      }
+      document.getElementById('code1').focus();
+      
+      // Start resend countdown
+      startResendCountdown();
+    }
+    
+    function closeVerificationModal() {
+      const modal = document.getElementById('verificationModal');
+      modal.classList.remove('active');
+      
+      if (resendTimer) {
+        clearInterval(resendTimer);
+      }
+    }
+    
+    function moveToNext(current, nextFieldId) {
+      if (current.value.length === 1) {
+        if (nextFieldId) {
+          document.getElementById(nextFieldId).focus();
+        }
+      }
+    }
+    
+    function verifyCode() {
+      let enteredCode = '';
+      for (let i = 1; i <= 6; i++) {
+        enteredCode += document.getElementById(`code${i}`).value;
+      }
+      
+      if (enteredCode.length !== 6) {
+        alert('Por favor ingresa el código completo de 6 dígitos');
+        return;
+      }
+      
+      if (enteredCode === verificationCode) {
+        // Success - save user data and redirect
+        saveUserData();
+        alert('¡Correo verificado exitosamente! Tu cuenta ha sido creada.');
+        window.location.href = 'login.html';
+      } else {
+        alert('Código incorrecto. Por favor intenta nuevamente.');
+        
+        // Clear inputs
+        for (let i = 1; i <= 6; i++) {
+          document.getElementById(`code${i}`).value = '';
+        }
+        document.getElementById('code1').focus();
+      }
+    }
+    
+    function resendCode() {
+      verificationCode = generateVerificationCode();
+      console.log('Nuevo código de verificación (simulado):', verificationCode);
+      alert('Se ha enviado un nuevo código a tu correo electrónico');
+      startResendCountdown();
+    }
+    
+    function startResendCountdown() {
+      const resendBtn = document.getElementById('resendBtn');
+      resendCountdown = 60;
+      
+      if (resendTimer) {
+        clearInterval(resendTimer);
+      }
+      
+      resendBtn.disabled = true;
+      
+      resendTimer = setInterval(() => {
+        resendCountdown--;
+        resendBtn.textContent = `Reenviar código (${resendCountdown}s)`;
+        
+        if (resendCountdown <= 0) {
+          clearInterval(resendTimer);
+          resendBtn.disabled = false;
+          resendBtn.textContent = 'Reenviar código';
+        }
+      }, 1000);
+    }
+    
+    function saveUserData() {
+      if (!pendingRegistrationData) return;
+      
+      // Get existing users from localStorage or initialize empty array
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      
+      // Add new user
+      users.push({
+        ...pendingRegistrationData,
+        id: Date.now(),
+        createdAt: new Date().toISOString(),
+        status: 'pending',
+        lockerNumber: null
+      });
+      
+      // Save to localStorage
+      localStorage.setItem('users', JSON.stringify(users));
+      
+      // Also save pending request for admin
+      let pendingRequests = JSON.parse(localStorage.getItem('pendingRequests') || '[]');
+      pendingRequests.push({
+        ...pendingRegistrationData,
+        id: Date.now(),
+        createdAt: new Date().toISOString(),
+        status: 'pending'
+      });
+      localStorage.setItem('pendingRequests', JSON.stringify(pendingRequests));
+      
+      pendingRegistrationData = null;
+    }
+
+    function handleRegistro(e) {
+      e.preventDefault();
+      
+      // Clear previous errors
+      document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+      document.querySelectorAll('.success-message').forEach(el => el.textContent = '');
+      document.querySelectorAll('input, select').forEach(el => el.classList.remove('error'));
+      
+      let hasErrors = false;
+      
+      // Validate all fields
+      const fields = ['nombre', 'cedula', 'telefono', 'correo', 'usuario', 'password', 'confirmPassword', 'direccion', 'ciudad', 'estado', 'pregunta1', 'respuesta1', 'pregunta2', 'respuesta2'];
+      
+      fields.forEach(field => {
+        const el = document.getElementById(field);
+        if (!el.value.trim()) {
+          const fieldName = field.charAt(0).toUpperCase() + field.slice(1);
+          document.getElementById(field + '-error').textContent = 'Este campo es requerido';
+          el.classList.add('error');
+          hasErrors = true;
+        }
+      });
+      
+      // Validate email format
+      if (!validateEmail()) {
+        hasErrors = true;
+      }
+      
+      // Validate username availability
+      const usernameInput = document.getElementById('usuario');
+      const username = usernameInput.value.trim().toLowerCase();
+      if (existingUsernames.includes(username)) {
+        document.getElementById('usuario-error').textContent = 'Este nombre de usuario ya está en uso';
+        usernameInput.classList.add('error');
+        hasErrors = true;
+      }
+      
+      // Validate password strength
+      if (!checkPasswordStrength()) {
+        hasErrors = true;
+      }
+      
+      // Validate password match
+      if (!checkPasswordMatch()) {
+        hasErrors = true;
+      }
+      
+      // Validate different questions
+      const pregunta1 = document.getElementById('pregunta1').value;
+      const pregunta2 = document.getElementById('pregunta2').value;
+      if (pregunta1 && pregunta2 && pregunta1 === pregunta2) {
+        document.getElementById('pregunta2-error').textContent = 'Debes seleccionar preguntas diferentes';
+        document.getElementById('pregunta2').classList.add('error');
+        hasErrors = true;
+      }
+      
+      // Validate terms
+      if (!document.getElementById('terminos').checked) {
+        document.getElementById('terminos-error').textContent = 'Debes aceptar los términos y condiciones';
+        hasErrors = true;
+      }
+      
+      if (hasErrors) return;
+      
+      // Store registration data temporarily
+      pendingRegistrationData = {
+        nombre: document.getElementById('nombre').value,
+        cedula: document.getElementById('cedula').value,
+        telefono: document.getElementById('telefono').value,
+        correo: document.getElementById('correo').value,
+        usuario: document.getElementById('usuario').value,
+        password: document.getElementById('password').value, // In real app, this should be hashed
+        direccion: document.getElementById('direccion').value,
+        ciudad: document.getElementById('ciudad').value,
+        estado: document.getElementById('estado').value,
+        pregunta1: document.getElementById('pregunta1').value,
+        respuesta1: document.getElementById('respuesta1').value,
+        pregunta2: document.getElementById('pregunta2').value,
+        respuesta2: document.getElementById('respuesta2').value
+      };
+      
+      // Show verification modal
+      showVerificationModal();
+    }
+  </script>
+</body>
+</html>

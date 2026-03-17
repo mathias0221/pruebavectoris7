@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Casillero - Vectoris Global</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --azul-profundo: #0A2F44;
+      --azul-oscuro: #061F2E;
+      --acento-naranja: #F97316;
+      --acento-verde: #10B981;
+      --acento-rojo: #EF4444;
+      --acento-amarillo: #F59E0B;
+      --acento-azul: #3B82F6;
+      --acento-purpura: #8B5CF6;
+      --gris-profesional: #F5F5F4;
+      --gris-texto: #57534E;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--azul-profundo) 0%, var(--azul-oscuro) 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .login-container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 420px;
+      padding: 40px;
+      margin: 20px;
+    }
+    
+    .login-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .logo svg {
+      width: 48px;
+      height: 48px;
+      color: var(--acento-naranja);
+    }
+    
+    .logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 24px;
+      color: var(--azul-profundo);
+    }
+    
+    .login-subtitle {
+      color: var(--gris-texto);
+      font-size: 14px;
+      margin-top: 8px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: var(--azul-profundo);
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #E5E7EB;
+      border-radius: 10px;
+      font-size: 15px;
+      transition: all 0.3s;
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: var(--acento-naranja);
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+    }
+    
+    .password-wrapper {
+      position: relative;
+    }
+    
+    .password-toggle {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--gris-texto);
+      padding: 4px;
+    }
+    
+    .password-toggle svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .login-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--acento-naranja);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 24px;
+    }
+    
+    .login-btn:hover {
+      background: #EA580C;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(249, 115, 22, 0.3);
+    }
+    
+    .login-btn:disabled {
+      background: #9CA3AF;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .back-link {
+      text-align: center;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid #E5E7EB;
+    }
+    
+    .back-link a {
+      color: var(--acento-naranja);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+    
+    .back-link a:hover {
+      color: #EA580C;
+    }
+    
+    .error-message {
+      background: #FEE2E2;
+      color: #991B1B;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    
+    .loading {
+      display: none;
+      text-align: center;
+      margin-top: 16px;
+    }
+    
+    .loading-spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #E5E7EB;
+      border-top: 2px solid var(--acento-naranja);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .user-badge {
+      background: var(--acento-verde);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-header">
+      <div class="logo">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+        </svg>
+        <span class="logo-text">VECTORIS<span style="color: var(--acento-naranja);">GLOBAL</span></span>
+      </div>
+      <h2 style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--azul-profundo); margin-bottom: 8px;">
+        Mi Casillero
+        <span class="user-badge">USUARIO</span>
+      </h2>
+      <p class="login-subtitle">Ingresa tus credenciales para acceder a tu casillero</p>
+    </div>
+    
+    <div class="error-message" id="errorMessage">
+      Usuario o contraseña incorrectos. Por favor intenta nuevamente.
+    </div>
+    
+    <form id="loginForm">
+      <div class="form-group">
+        <label class="form-label">Usuario</label>
+        <input 
+          type="text" 
+          id="username" 
+          class="form-input" 
+          placeholder="Ingresa tu usuario"
+          required
+        >
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Contraseña</label>
+        <div class="password-wrapper">
+          <input 
+            type="password" 
+            id="password" 
+            class="form-input" 
+            placeholder="Ingresa tu contraseña"
+            required
+          >
+          <button type="button" class="password-toggle" onclick="togglePassword()">
+            <svg id="eyeIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <button type="submit" class="login-btn" id="loginBtn">
+        Ingresar a mi Casillero
+      </button>
+    </form>
+    
+    <div class="loading" id="loading">
+      <div class="loading-spinner"></div>
+      <p style="margin-top: 12px; color: var(--gris-texto); font-size: 14px;">Verificando credenciales...</p>
+    </div>
+    
+    <div class="back-link">
+      <a href="index.html">← Volver al inicio</a>
+    </div>
+  </div>
+
+  <script>
+    // Credenciales ofuscadas (simple ofuscación)
+    const _0x5a6b = 'usuario1';
+    const _0x7c8d = '12345678';
+    
+    function togglePassword() {
+      const passwordInput = document.getElementById('password');
+      const eyeIcon = document.getElementById('eyeIcon');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>';
+      } else {
+        passwordInput.type = 'password';
+        eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>';
+      }
+    }
+    
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const errorMessage = document.getElementById('errorMessage');
+      const loginBtn = document.getElementById('loginBtn');
+      const loading = document.getElementById('loading');
+      
+      // Ocultar mensaje de error anterior
+      errorMessage.style.display = 'none';
+      
+      // Mostrar loading
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Verificando...';
+      loading.style.display = 'block';
+      
+      // Simular verificación
+      setTimeout(() => {
+        if (username === _0x5a6b && password === _0x7c8d) {
+          // Credenciales correctas - redirigir al dashboard
+          window.location.href = 'dashboard.html?auth=1';
+        } else {
+          // Credenciales incorrectas
+          errorMessage.style.display = 'block';
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'Ingresar a mi Casillero';
+          loading.style.display = 'none';
+          
+          // Limpiar campos
+          document.getElementById('password').value = '';
+          document.getElementById('username').focus();
+        }
+      }, 1500);
+    });
+  </script>
+</body>
+</html>

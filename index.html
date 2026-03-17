@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vectoris Global - Envíos desde USA y China a Venezuela</title>
+  <meta name="description" content="Agencia de envíos con casilleros en USA y China para enviar paquetes a Venezuela. Rápido, seguro y sin complicaciones.">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --azul-profundo: #0A2F44;
+      --azul-oscuro: #061F2E;
+      --acento-naranja: #F97316;
+      --acento-verde: #10B981;
+      --acento-purpura: #8B5CF6;
+      --gris-profesional: #F5F5F4;
+      --gris-texto: #57534E;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: white;
+      min-height: 100vh;
+    }
+    
+    .font-montserrat {
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    
+    /* Header */
+    header {
+      background: var(--azul-profundo);
+      color: white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: white;
+    }
+    
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      color: var(--acento-naranja);
+    }
+    
+    .logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+    }
+    
+    .logo-span {
+      color: var(--acento-naranja);
+    }
+    
+    nav.desktop-nav {
+      display: none;
+    }
+    
+    @media (min-width: 768px) {
+      nav.desktop-nav {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+    }
+    
+    nav.desktop-nav a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    nav.desktop-nav a:hover {
+      color: var(--acento-naranja);
+    }
+    
+    .btn-cta {
+      background: var(--acento-naranja);
+      color: white;
+      font-weight: 700;
+      padding: 8px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn-cta:hover {
+      background: #EA580C;
+    }
+    
+    .btn-cta-small {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+    
+    .mobile-menu-btn {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 8px;
+    }
+    
+    .mobile-menu-btn:hover {
+      color: var(--acento-naranja);
+    }
+    
+    @media (min-width: 768px) {
+      .mobile-menu-btn {
+        display: none;
+      }
+    }
+    
+    .mobile-nav {
+      display: none;
+      padding: 16px 0;
+      border-top: 1px solid var(--azul-oscuro);
+    }
+    
+    .mobile-nav.active {
+      display: block;
+    }
+    
+    .mobile-nav a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 8px 0;
+      transition: color 0.3s;
+    }
+    
+    .mobile-nav a:hover {
+      color: var(--acento-naranja);
+    }
+    
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--azul-profundo) 0%, var(--azul-oscuro) 100%);
+      color: white;
+      padding: 80px 0;
+    }
+    
+    .hero-content {
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .hero-icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    
+    .hero-icons span {
+      font-size: 36px;
+    }
+    
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 36px;
+      margin-bottom: 16px;
+    }
+    
+    @media (min-width: 768px) {
+      .hero h1 {
+        font-size: 60px;
+      }
+    }
+    
+    .hero p {
+      font-size: 20px;
+      color: #D1D5DB;
+      margin-bottom: 32px;
+    }
+    
+    @media (min-width: 768px) {
+      .hero p {
+        font-size: 24px;
+      }
+    }
+    
+    .hero-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+    
+    @media (min-width: 640px) {
+      .hero-buttons {
+        flex-direction: row;
+      }
+    }
+    
+    .btn-primary {
+      background: var(--acento-naranja);
+      color: white;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s;
+      font-size: 18px;
+    }
+    
+    .btn-primary:hover {
+      background: #EA580C;
+      transform: scale(1.05);
+    }
+    
+    .btn-secondary {
+      border: 2px solid white;
+      color: white;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s;
+      font-size: 18px;
+    }
+    
+    .btn-secondary:hover {
+      background: white;
+      color: var(--azul-profundo);
+    }
+    
+    .hero-features {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    
+    @media (min-width: 768px) {
+      .hero-features {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    .hero-feature {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(4px);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    
+    .hero-feature-icon {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+    
+    .hero-feature h3 {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    
+    .hero-feature p {
+      font-size: 14px;
+      color: #D1D5DB;
+      margin: 0;
+    }
+    
+    /* Benefits Section */
+    .benefits {
+      padding: 64px 0;
+      background: var(--gris-profesional);
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    
+    .section-header h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 30px;
+      color: var(--azul-profundo);
+      margin-bottom: 16px;
+    }
+    
+    @media (min-width: 768px) {
+      .section-header h2 {
+        font-size: 36px;
+      }
+    }
+    
+    .section-header p {
+      color: var(--gris-texto);
+      font-size: 18px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      max-width: 900px;
+      margin: 0 auto 64px;
+    }
+    
+    @media (min-width: 768px) {
+      .benefits-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    .benefit-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      padding: 32px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    
+    .benefit-card:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      transform: translateY(-8px);
+    }
+    
+    .benefit-icon {
+      margin-bottom: 16px;
+    }
+    
+    .benefit-icon svg {
+      width: 48px;
+      height: 48px;
+    }
+    
+    .benefit-icon.orange { color: var(--acento-naranja); }
+    .benefit-icon.green { color: var(--acento-verde); }
+    .benefit-icon.purple { color: var(--acento-purpura); }
+    
+    .benefit-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--azul-profundo);
+      margin-bottom: 8px;
+    }
+    
+    .benefit-card p {
+      color: var(--gris-texto);
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    
+    @media (min-width: 768px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .features-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    
+    .feature-item {
+      background: white;
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+    }
+    
+    .feature-item-icon {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+    
+    .feature-item h4 {
+      font-weight: 700;
+      color: var(--azul-profundo);
+      margin-bottom: 8px;
+    }
+    
+    .feature-item p {
+      color: var(--gris-texto);
+      font-size: 14px;
+    }
+    
+    /* Calculator Section */
+    .calculator {
+      padding: 64px 0;
+      background: white;
+    }
+    
+    .calculator-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .calculator-header svg {
+      width: 32px;
+      height: 32px;
+      color: var(--acento-naranja);
+    }
+    
+    .calculator-box {
+      background: var(--gris-profesional);
+      border-radius: 16px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      padding: 32px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .calculator-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    
+    @media (min-width: 768px) {
+      .calculator-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gris-texto);
+      margin-bottom: 8px;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #D1D5DB;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--acento-naranja);
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+    }
+    
+    .btn-calculate {
+      background: var(--acento-naranja);
+      color: white;
+      font-weight: 700;
+      padding: 12px 32px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    
+    .btn-calculate:hover {
+      background: #EA580C;
+    }
+    
+    .btn-calculate:disabled {
+      background: #9CA3AF;
+      cursor: not-allowed;
+    }
+    
+    /* Results */
+    .results {
+      margin-top: 32px;
+      background: var(--azul-profundo);
+      color: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      padding: 32px;
+      display: none;
+    }
+    
+    .results.active {
+      display: block;
+    }
+    
+    .results h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    
+    @media (min-width: 768px) {
+      .results-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    .result-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(4px);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    
+    .result-card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .result-card-header svg {
+      width: 24px;
+      height: 24px;
+      color: var(--acento-naranja);
+    }
+    
+    .result-card-header h4 {
+      font-weight: 700;
+      font-size: 20px;
+    }
+    
+    .result-card p {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    
+    .result-card .total {
+      font-weight: 700;
+      font-size: 18px;
+    }
+    
+    .recommendation {
+      background: rgba(249, 115, 22, 0.2);
+      border: 1px solid var(--acento-naranja);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    
+    .recommendation-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    
+    .recommendation-header span {
+      font-size: 24px;
+    }
+    
+    .recommendation-header h4 {
+      font-weight: 700;
+      font-size: 18px;
+    }
+    
+    .recommendation p {
+      font-size: 18px;
+    }
+    
+    .results-actions {
+      text-align: center;
+    }
+    
+    .results-actions .btn-primary {
+      margin-bottom: 16px;
+    }
+    
+    .results-actions button[type="button"] {
+      color: rgba(255, 255, 255, 0.8);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+      font-size: 14px;
+    }
+    
+    .results-actions button[type="button"]:hover {
+      color: white;
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--azul-profundo);
+      color: white;
+    }
+    
+    .footer-content {
+      padding: 48px 0;
+    }
+    
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    
+    @media (min-width: 768px) {
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: 2fr 1fr 1fr;
+      }
+    }
+    
+    .footer-brand p {
+      color: #D1D5DB;
+      margin: 16px 0;
+      max-width: 400px;
+    }
+    
+    .footer-social {
+      display: flex;
+      gap: 16px;
+    }
+    
+    .footer-social a {
+      color: #D1D5DB;
+      transition: color 0.3s;
+    }
+    
+    .footer-social a:hover {
+      color: var(--acento-naranja);
+    }
+    
+    .footer-social svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .footer-links h3 {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 16px;
+      color: var(--acento-naranja);
+    }
+    
+    .footer-links ul {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 8px;
+    }
+    
+    .footer-links a {
+      color: #D1D5DB;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-links a:hover {
+      color: var(--acento-naranja);
+    }
+    
+    .footer-contact h3 {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 16px;
+      color: var(--acento-naranja);
+    }
+    
+    .footer-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #D1D5DB;
+      margin-bottom: 12px;
+    }
+    
+    .footer-contact-item svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+    
+    .footer-bottom {
+      border-top: 1px solid var(--azul-oscuro);
+      padding: 32px 0;
+    }
+    
+    .footer-bottom-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    @media (min-width: 768px) {
+      .footer-bottom-content {
+        flex-direction: row;
+      }
+    }
+    
+    .footer-bottom p {
+      color: #D1D5DB;
+      font-size: 14px;
+    }
+    
+    .footer-bottom-links {
+      display: flex;
+      gap: 24px;
+    }
+    
+    .footer-bottom-links a {
+      color: #D1D5DB;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+    
+    .footer-bottom-links a:hover {
+      color: var(--acento-naranja);
+    }
+    
+    /* WhatsApp Button */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 50;
+    }
+    
+    .whatsapp-btn {
+      background: #22C55E;
+      color: white;
+      padding: 16px;
+      border-radius: 50%;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+    }
+    
+    .whatsapp-btn:hover {
+      background: #16A34A;
+    }
+    
+    .whatsapp-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">
+          <svg class="logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <div class="logo-text">VECTORIS<span class="logo-span"> GLOBAL</span></div>
+        </a>
+        
+        <nav class="desktop-nav">
+          <a href="index.html">Inicio</a>
+          <a href="tarifas.html">Tarifas</a>
+          <a href="recursos.html">Recursos</a>
+          <a href="login.html">Iniciar Sesión</a>
+          <a href="registro.html" class="btn-cta btn-cta-small">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+            </svg>
+            <span>CREAR CASILLERO</span>
+          </a>
+        </nav>
+        
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+          <svg id="menu-icon" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <svg id="close-icon" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="mobile-nav" id="mobile-nav">
+        <a href="index.html">Inicio</a>
+        <a href="tarifas.html">Tarifas</a>
+        <a href="recursos.html">Recursos</a>
+        <a href="login.html">Iniciar Sesión</a>
+        <a href="registro.html" class="btn-cta">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span>CREAR CASILLERO</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-icons">
+            <span>📦</span>
+            <span>🚢</span>
+          </div>
+          <h1>ENVÍOS DESDE USA Y CHINA A VENEZUELA</h1>
+          <p>RÁPIDO · SEGURO · SIN COMPLICACIONES</p>
+          
+          <div class="hero-buttons">
+            <a href="registro.html" class="btn-primary">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+              <span>CREAR MI CASILLERO GRATIS</span>
+            </a>
+            <a href="#calculadora" class="btn-secondary">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+              <span>CALCULAR ENVÍO</span>
+            </a>
+          </div>
+          
+          <div class="hero-features">
+            <div class="hero-feature">
+              <div class="hero-feature-icon">🌎</div>
+              <h3>Cobertura Global</h3>
+              <p>Casilleros en Miami y Shanghai para tus compras internacionales</p>
+            </div>
+            <div class="hero-feature">
+              <div class="hero-feature-icon">📱</div>
+              <h3>Rastreo en Tiempo Real</h3>
+              <p>Sigue tus paquetes desde el origen hasta tu puerta</p>
+            </div>
+            <div class="hero-feature">
+              <div class="hero-feature-icon">💰</div>
+              <h3>Tarifas Competitivas</h3>
+              <p>Los mejores precios del mercado con servicio premium</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+      <div class="container">
+        <div class="section-header">
+          <h2>¿Por qué elegir Vectoris Global?</h2>
+          <p>Ofrecemos la mejor experiencia en envíos internacionales con tecnología de punta y un servicio al cliente excepcional.</p>
+        </div>
+        
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon orange">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <h3>⚡ RÁPIDO</h3>
+            <p>Entrega 5-7 días hábiles</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon green">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+            </div>
+            <h3>🔒 SEGURO</h3>
+            <p>Paquetes asegurados</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon purple">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+            <h3>📍 RASTREO</h3>
+            <p>En tiempo real</p>
+          </div>
+        </div>
+        
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-item-icon">🌍</div>
+            <h4>Casilleros en USA y China</h4>
+            <p>Acceso a los mejores mercados del mundo</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-item-icon">📊</div>
+            <h4>Panel de Control</h4>
+            <p>Gestiona todos tus envíos en un solo lugar</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-item-icon">💬</div>
+            <h4>Soporte 24/7</h4>
+            <p>Asistencia cuando la necesites</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-item-icon">🎓</div>
+            <h4>Recursos Educativos</h4>
+            <p>Aprende a optimizar tus envíos</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator" id="calculadora">
+      <div class="container">
+        <div class="section-header">
+          <div class="calculator-header">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+            </svg>
+            <h2>🔢 CALCULADORA DE ENVÍOS</h2>
+          </div>
+          <p>(Ingresa las medidas en pulgadas y peso en libras)</p>
+        </div>
+        
+        <div class="calculator-box">
+          <div class="calculator-grid">
+            <div class="form-group">
+              <label>LARGO</label>
+              <input type="text" id="largo" placeholder="pulgadas">
+            </div>
+            <div class="form-group">
+              <label>ANCHO</label>
+              <input type="text" id="ancho" placeholder="pulgadas">
+            </div>
+            <div class="form-group">
+              <label>ALTO</label>
+              <input type="text" id="alto" placeholder="pulgadas">
+            </div>
+            <div class="form-group">
+              <label>PESO</label>
+              <input type="text" id="peso" placeholder="libras">
+            </div>
+          </div>
+          
+          <div style="text-align: center;">
+            <button class="btn-calculate" onclick="calculateShipping()">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+              <span id="calc-text">CALCULAR ENVÍO</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="results" id="results">
+          <h3>RESULTADOS:</h3>
+          <div class="results-grid">
+            <div class="result-card">
+              <div class="result-card-header">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                </svg>
+                <h4>✈️ AÉREO</h4>
+              </div>
+              <p>5-7 días hábiles</p>
+              <div class="result-aereo-details"></div>
+              <p class="total">💰 TOTAL: $<span id="aereo-total">0</span></p>
+            </div>
+            <div class="result-card">
+              <div class="result-card-header">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                <h4>🚢 MARÍTIMO</h4>
+              </div>
+              <p>20-25 días hábiles</p>
+              <div class="result-maritimo-details"></div>
+              <p class="total">📦 TOTAL: $<span id="maritimo-total">0</span></p>
+            </div>
+          </div>
+          <div class="recommendation">
+            <div class="recommendation-header">
+              <span>🤖</span>
+              <h4>RECOMENDACIÓN:</h4>
+            </div>
+            <p id="recommendation-text"></p>
+          </div>
+          <div class="results-actions">
+            <a href="registro.html" class="btn-primary">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+              <span>CREAR CASILLERO PARA ENVIAR ESTE PAQUETE</span>
+            </a>
+            <div>
+              <button type="button" onclick="resetCalculator()">Calcular otro envío</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="logo">
+              <svg class="logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+              <div class="logo-text">VECTORIS<span class="logo-span"> GLOBAL</span></div>
+            </div>
+            <p>Tu aliado de confianza para envíos desde USA y China hacia Venezuela. Rápido, seguro y sin complicaciones.</p>
+            <div class="footer-social">
+              <a href="https://facebook.com" target="_blank" rel="noopener">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.468 2.373c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.122.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.122v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/>
+                </svg>
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noopener">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+          
+          <div class="footer-links">
+            <h3>Enlaces Rápidos</h3>
+            <ul>
+              <li><a href="tarifas.html">Tarifas</a></li>
+              <li><a href="recursos.html">Recursos</a></li>
+              <li><a href="login.html">Iniciar Sesión</a></li>
+              <li><a href="registro.html">Crear Casillero</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-contact">
+            <h3>Contacto</h3>
+            <div class="footer-contact-item">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+              </svg>
+              <span>+58 414-1234567</span>
+            </div>
+            <div class="footer-contact-item">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              <span>info@vectorisglobal.com</span>
+            </div>
+            <div class="footer-contact-item">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              <span>Caracas, Venezuela<br>Miami, FL, USA<br>Shanghai, China</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="footer-bottom-content">
+            <p>© 2024 Vectoris Global. Todos los derechos reservados.</p>
+            <div class="footer-bottom-links">
+              <a href="#">Términos y Condiciones</a>
+              <a href="#">Política de Privacidad</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="whatsapp-float">
+    <a href="https://wa.me/584141234567?text=Hola%20Vectoris%20Global,%20quiero%20información%20sobre%20sus%20servicios%20de%20envíos" class="whatsapp-btn" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+      <svg fill="currentColor" viewBox="0 0 24 24">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.123-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 001.171.008C.426 0 0 .425 0 .952v22.096c0 .527.426.952.952.952h22.096c.527 0 .952-.426.952-.952 0-5.921-2.298-11.485-6.471-15.658"/>
+      </svg>
+    </a>
+  </div>
+
+  <script>
+    function toggleMobileMenu() {
+      const mobileNav = document.getElementById('mobile-nav');
+      const menuIcon = document.getElementById('menu-icon');
+      const closeIcon = document.getElementById('close-icon');
+      
+      mobileNav.classList.toggle('active');
+      
+      if (mobileNav.classList.contains('active')) {
+        menuIcon.style.display = 'none';
+        closeIcon.style.display = 'block';
+      } else {
+        menuIcon.style.display = 'block';
+        closeIcon.style.display = 'none';
+      }
+    }
+
+    function calculateShipping() {
+      const largo = parseFloat(document.getElementById('largo').value);
+      const ancho = parseFloat(document.getElementById('ancho').value);
+      const alto = parseFloat(document.getElementById('alto').value);
+      const peso = parseFloat(document.getElementById('peso').value);
+      
+      if (!largo || !ancho || !alto || !peso) {
+        alert('Por favor completa todos los campos');
+        return;
+      }
+      
+      document.getElementById('calc-text').textContent = 'CALCULANDO...';
+      
+      setTimeout(() => {
+        const pesoDim = (largo * ancho * alto) / 166;
+        const pesoFacturableAereo = Math.max(peso, pesoDim);
+        
+        const volumenPulgadas = largo * ancho * alto;
+        const piesCubicos = volumenPulgadas / 1728;
+        
+        const tarifasAereas = [
+          { min: 1, max: 10, precio: 5.50 },
+          { min: 11, max: 20, precio: 5.25 },
+          { min: 21, max: 50, precio: 5.00 },
+          { min: 51, max: 100, precio: 4.75 },
+          { min: 101, max: Infinity, precio: 4.50 }
+        ];
+        
+        const tarifasMaritimas = [
+          { min: 0, max: 5, precio: 29.50 },
+          { min: 5, max: 10, precio: 28.00 },
+          { min: 10, max: 20, precio: 26.50 },
+          { min: 20, max: Infinity, precio: 25.00 }
+        ];
+        
+        const rangoAereo = tarifasAereas.find(r => pesoFacturableAereo >= r.min && pesoFacturableAereo <= r.max);
+        const precioPorLibraAereo = rangoAereo ? rangoAereo.precio : 5.50;
+        const totalAereo = pesoFacturableAereo * precioPorLibraAereo;
+        
+        const rangoMaritimo = tarifasMaritimas.find(r => piesCubicos >= r.min && piesCubicos < r.max);
+        const precioPorPieCubico = rangoMaritimo ? rangoMaritimo.precio : 25.00;
+        const totalMaritimo = piesCubicos * precioPorPieCubico;
+        
+        const esMejorMaritimo = totalMaritimo < totalAereo;
+        const ahorro = Math.abs(totalAereo - totalMaritimo);
+        const porcentajeAhorro = (ahorro / Math.max(totalAereo, totalMaritimo)) * 100;
+        
+        document.getElementById('aereo-total').textContent = totalAereo.toFixed(2);
+        document.getElementById('maritimo-total').textContent = totalMaritimo.toFixed(2);
+        
+        document.querySelector('.result-aereo-details').innerHTML = `
+          <p>Peso real: ${peso} lbs</p>
+          <p>Peso dim: ${pesoDim.toFixed(1)} lbs</p>
+          <p>⚖️ SE COBRA: ${pesoFacturableAereo.toFixed(1)} lbs</p>
+        `;
+        
+        document.querySelector('.result-maritimo-details').innerHTML = `
+          <p>Volumen: ${volumenPulgadas.toLocaleString()} pulg³</p>
+          <p>Pies cúbicos: ${piesCubicos.toFixed(2)}</p>
+        `;
+        
+        document.getElementById('recommendation-text').textContent = esMejorMaritimo 
+          ? `Por MARÍTIMO ahorras $${ahorro.toFixed(2)} (${porcentajeAhorro.toFixed(0)}% menos). Es la mejor opción para este paquete voluminoso.`
+          : `Por AÉREO ahorras $${ahorro.toFixed(2)} (${porcentajeAhorro.toFixed(0)}% menos). Es la mejor opción para este paquete ligero.`;
+        
+        document.getElementById('results').classList.add('active');
+        document.getElementById('calc-text').textContent = 'CALCULAR ENVÍO';
+      }, 800);
+    }
+    
+    function resetCalculator() {
+      document.getElementById('largo').value = '';
+      document.getElementById('ancho').value = '';
+      document.getElementById('alto').value = '';
+      document.getElementById('peso').value = '';
+      document.getElementById('results').classList.remove('active');
+    }
+  </script>
+</body>
+</html>

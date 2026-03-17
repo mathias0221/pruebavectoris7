@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Casillero - Vectoris Global</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script>
+    // Verificación simple de acceso
+    if (!window.location.search.includes('auth=1')) {
+      window.location.href = 'login-usuario.html';
+    }
+  </script>
+  <style>
+    :root {
+      --azul-profundo: #0A2F44;
+      --azul-oscuro: #061F2E;
+      --acento-naranja: #F97316;
+      --acento-verde: #10B981;
+      --acento-rojo: #EF4444;
+      --acento-amarillo: #F59E0B;
+      --acento-azul: #3B82F6;
+      --acento-purpura: #8B5CF6;
+      --gris-profesional: #F5F5F4;
+      --gris-texto: #57534E;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #F3F4F6;
+      min-height: 100vh;
+    }
+    
+    .font-montserrat {
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    /* Layout */
+    .dashboard-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: var(--azul-profundo);
+      color: white;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    
+    .sidebar-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--azul-oscuro);
+    }
+    
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: white;
+    }
+    
+    .sidebar-logo svg {
+      width: 32px;
+      height: 32px;
+      color: var(--acento-naranja);
+    }
+    
+    .sidebar-logo span {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+    }
+    
+    .user-info {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--azul-oscuro);
+    }
+    
+    .user-avatar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .user-avatar-img {
+      width: 40px;
+      height: 40px;
+      background: var(--acento-verde);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+    
+    .user-details h4 {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    
+    .user-details p {
+      font-size: 13px;
+      color: #9CA3AF;
+    }
+    
+    .nav-section {
+      padding: 16px 0;
+    }
+    
+    .nav-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #9CA3AF;
+      padding: 0 24px 8px;
+      letter-spacing: 0.5px;
+    }
+    
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 24px;
+      color: #D1D5DB;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      font-size: 14px;
+    }
+    
+    .nav-item:hover,
+    .nav-item.active {
+      background: var(--azul-oscuro);
+      color: white;
+    }
+    
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .nav-badge {
+      background: var(--acento-rojo);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-left: auto;
+    }
+    
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 260px;
+      padding: 24px;
+    }
+    
+    /* Top Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 16px 24px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .page-title h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      color: var(--azul-profundo);
+    }
+    
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .notification-btn {
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      color: var(--gris-texto);
+    }
+    
+    .notification-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .notification-badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: var(--acento-rojo);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .user-menu-avatar {
+      width: 40px;
+      height: 40px;
+      background: var(--acento-verde);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+    
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    
+    @media (min-width: 640px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .stat-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .stat-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+    
+    .stat-icon.blue { background: #DBEAFE; color: var(--acento-azul); }
+    .stat-icon.green { background: #D1FAE5; color: var(--acento-verde); }
+    .stat-icon.orange { background: #FFEDD5; color: var(--acento-naranja); }
+    .stat-icon.purple { background: #EDE9FE; color: var(--acento-purpura); }
+    
+    .stat-content h3 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--azul-profundo);
+    }
+    
+    .stat-content p {
+      color: var(--gris-texto);
+      font-size: 14px;
+    }
+    
+    /* Cards */
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid #E5E7EB;
+    }
+    
+    .card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--azul-profundo);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s;
+    }
+    
+    .btn svg {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .btn-primary {
+      background: var(--acento-naranja);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #EA580C;
+    }
+    
+    .btn-secondary {
+      background: #F3F4F6;
+      color: #374151;
+    }
+    
+    .btn-secondary:hover {
+      background: #E5E7EB;
+    }
+    
+    .btn-success {
+      background: var(--acento-verde);
+      color: white;
+    }
+    
+    .btn-success:hover {
+      background: #059669;
+    }
+    
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+    
+    .card-body {
+      padding: 20px 24px;
+    }
+    
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th {
+      text-align: left;
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #6B7280;
+      background: #F9FAFB;
+      border-bottom: 1px solid #E5E7EB;
+    }
+    
+    td {
+      padding: 16px;
+      border-bottom: 1px solid #E5E7EB;
+      font-size: 14px;
+    }
+    
+    tbody tr:hover {
+      background: #F9FAFB;
+    }
+    
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .status-pending {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+    
+    .status-transit {
+      background: #DBEAFE;
+      color: #1E40AF;
+    }
+    
+    .status-delivered {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+    
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    
+    .status-dot.pending { background: #F59E0B; }
+    .status-dot.transit { background: #3B82F6; }
+    .status-dot.delivered { background: #10B981; }
+    
+    .actions-cell {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .action-btn {
+      padding: 6px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .action-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .action-btn.view { background: #DBEAFE; color: var(--acento-azul); }
+    .action-btn.edit { background: #FEF3C7; color: #92400E; }
+    
+    /* WhatsApp Button */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #25D366;
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+      cursor: pointer;
+      transition: all 0.3s;
+      z-index: 1000;
+      text-decoration: none;
+    }
+    
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    }
+    
+    .whatsapp-float svg {
+      width: 30px;
+      height: 30px;
+    }
+    
+    /* Mobile Menu Toggle */
+    .mobile-toggle {
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 200;
+      background: var(--azul-profundo);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    
+    @media (max-width: 1024px) {
+      .mobile-toggle {
+        display: block;
+      }
+      
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+      }
+      
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+    }
+    
+    /* Overlay */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 99;
+    }
+    
+    @media (max-width: 1024px) {
+      .sidebar-overlay.active {
+        display: block;
+      }
+    }
+    
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal.active {
+      display: flex;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    .modal-header {
+      padding: 24px;
+      border-bottom: 1px solid #E5E7EB;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .modal-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--azul-profundo);
+    }
+    
+    .modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      color: var(--gris-texto);
+    }
+    
+    .modal-close svg {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .modal-body {
+      padding: 24px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: var(--azul-profundo);
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #E5E7EB;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+    
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--acento-naranja);
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+    }
+    
+    .modal-footer {
+      padding: 24px;
+      border-top: 1px solid #E5E7EB;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+  <button class="mobile-toggle" onclick="toggleSidebar()">
+    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+    </svg>
+  </button>
+  
+  <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span>VECTORIS<span style="color: var(--acento-naranja);">GLOBAL</span></span>
+        </a>
+      </div>
+      
+      <div class="user-info">
+        <div class="user-avatar">
+          <div class="user-avatar-img">U1</div>
+          <div class="user-details">
+            <h4>Usuario1</h4>
+            <p>Casillero: VE-2024-0089</p>
+          </div>
+        </div>
+      </div>
+      
+      <nav class="nav-section">
+        <div class="nav-title">Mi Casillero</div>
+        <button class="nav-item active" onclick="showSection('dashboard')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+          Dashboard
+        </button>
+        <button class="nav-item" onclick="showSection('paquetes')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          Mis Paquetes
+          <span class="nav-badge">5</span>
+        </button>
+        <button class="nav-item" onclick="showSection('instrucciones')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          Instrucciones
+        </button>
+        <button class="nav-item" onclick="showSection('recursos')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+          </svg>
+          Recursos
+        </button>
+        
+        <div class="nav-title">Configuración</div>
+        <button class="nav-item" onclick="showSection('perfil')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+          </svg>
+          Mi Perfil
+        </button>
+        <button class="nav-item" onclick="showSection('seguridad')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+          Seguridad
+        </button>
+        <a href="index.html" class="nav-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+          </svg>
+          Cerrar Sesión
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="page-title">
+          <h1 id="page-title">Mi Dashboard</h1>
+        </div>
+        <div class="top-actions">
+          <button class="notification-btn">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+            <span class="notification-badge">2</span>
+          </button>
+          <div class="user-menu">
+            <span>Usuario1</span>
+            <div class="user-menu-avatar">U1</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Section -->
+      <section id="dashboard-section" class="section-content">
+        <!-- Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon blue">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3>5</h3>
+              <p>Paquetes Activos</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3>23</h3>
+              <p>Paquetes Entregados</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon orange">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3>$456.80</h3>
+              <p>Saldo Actual</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon purple">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3>2</h3>
+              <p>Envíos en Tránsito</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Packages -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+              Paquetes Recientes
+            </h3>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-sm">Ver Todos</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Tracking</th>
+                    <th>Descripción</th>
+                    <th>Peso</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>1Z999AA1234567890</strong></td>
+                    <td>Compras Amazon</td>
+                    <td>12.5 lbs</td>
+                    <td><span class="status-badge status-transit"><span class="status-dot transit"></span>En Tránsito</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view" title="Ver detalles"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                      <button class="action-btn edit" title="Dar instrucción" onclick="openInstructionModal()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>9400111899562912345678</strong></td>
+                    <td>Ropa y Accesorios</td>
+                    <td>8.2 lbs</td>
+                    <td><span class="status-badge status-pending"><span class="status-dot pending"></span>En Bodega</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view" title="Ver detalles"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                      <button class="action-btn edit" title="Dar instrucción" onclick="openInstructionModal()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>1Z888BB9876543210</strong></td>
+                    <td>Electrónicos</td>
+                    <td>25.0 lbs</td>
+                    <td><span class="status-badge status-delivered"><span class="status-dot delivered"></span>Entregado</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view" title="Ver detalles"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Paquetes Section -->
+      <section id="paquetes-section" class="section-content" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+              Todos Mis Paquetes
+            </h3>
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-sm">Exportar</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Tracking</th>
+                    <th>Descripción</th>
+                    <th>Peso</th>
+                    <th>Valor Declarado</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>1Z999AA1234567890</strong></td>
+                    <td>Compras Amazon</td>
+                    <td>12.5 lbs</td>
+                    <td>$125.00</td>
+                    <td>15/03/2024</td>
+                    <td><span class="status-badge status-transit"><span class="status-dot transit"></span>En Tránsito</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                      <button class="action-btn edit" onclick="openInstructionModal()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>9400111899562912345678</strong></td>
+                    <td>Ropa y Accesorios</td>
+                    <td>8.2 lbs</td>
+                    <td>$85.50</td>
+                    <td>14/03/2024</td>
+                    <td><span class="status-badge status-pending"><span class="status-dot pending"></span>En Bodega</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                      <button class="action-btn edit" onclick="openInstructionModal()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Instrucciones Section -->
+      <section id="instrucciones-section" class="section-content" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              Mis Instrucciones de Envío
+            </h3>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-sm" onclick="openInstructionModal()">+ Nueva Instrucción</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Tracking</th>
+                    <th>Tipo</th>
+                    <th>Destino</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>1Z999AA1234567890</strong></td>
+                    <td>Aéreo Express</td>
+                    <td>Caracas - Centro</td>
+                    <td>16/03/2024</td>
+                    <td><span class="status-badge status-pending"><span class="status-dot pending"></span>Pendiente</span></td>
+                    <td class="actions-cell">
+                      <button class="action-btn view"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                      <button class="action-btn edit"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recursos Section -->
+      <section id="recursos-section" class="section-content" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+              </svg>
+              Recursos Educativos
+            </h3>
+          </div>
+          <div class="card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px;">
+              <div style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 16px; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.borderColor='#F97316'" onmouseout="this.style.borderColor='#E5E7EB'">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                  <div style="width: 40px; height: 40px; background: #DBEAFE; color: #3B82F6; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 style="font-weight: 600; color: var(--azul-profundo);">Cómo comprar en Amazon</h4>
+                    <p style="font-size: 12px; color: var(--gris-texto);">Video tutorial</p>
+                  </div>
+                </div>
+                <p style="font-size: 13px; color: var(--gris-texto);">Aprende paso a paso cómo hacer tus compras en Amazon y enviarlas a tu casillero.</p>
+              </div>
+              
+              <div style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 16px; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.borderColor='#F97316'" onmouseout="this.style.borderColor='#E5E7EB'">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                  <div style="width: 40px; height: 40px; background: #D1FAE5; color: #10B981; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 style="font-weight: 600; color: var(--azul-profundo);">Guía de Primer Envío</h4>
+                    <p style="font-size: 12px; color: var(--gris-texto);">PDF descargable</p>
+                  </div>
+                </div>
+                <p style="font-size: 13px; color: var(--gris-texto);">Todo lo que necesitas saber para realizar tu primer envío internacional.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Perfil Section -->
+      <section id="perfil-section" class="section-content" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+              </svg>
+              Mi Perfil
+            </h3>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-sm">Guardar Cambios</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+              <div>
+                <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 700; margin-bottom: 16px; color: var(--azul-profundo);">Información Personal</h4>
+                <div class="form-group">
+                  <label class="form-label">Nombre Completo</label>
+                  <input type="text" class="form-input" value="Usuario1">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Correo Electrónico</label>
+                  <input type="email" class="form-input" value="usuario1@email.com">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Teléfono</label>
+                  <input type="tel" class="form-input" value="+58 414-1234567">
+                </div>
+              </div>
+              <div>
+                <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 700; margin-bottom: 16px; color: var(--azul-profundo);">Información de Casillero</h4>
+                <div class="form-group">
+                  <label class="form-label">Número de Casillero</label>
+                  <input type="text" class="form-input" value="VE-2024-0089" readonly style="background: #F9FAFB;">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Dirección en USA</label>
+                  <input type="text" class="form-input" value="12345 NW 87th Ave, Miami, FL 33172" readonly style="background: #F9FAFB;">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Dirección en China</label>
+                  <input type="text" class="form-input" value="Room 1234, Building A, Shanghai" readonly style="background: #F9FAFB;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seguridad Section -->
+      <section id="seguridad-section" class="section-content" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+              </svg>
+              Seguridad de la Cuenta
+            </h3>
+          </div>
+          <div class="card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+              <div>
+                <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 700; margin-bottom: 16px; color: var(--azul-profundo);">Cambiar Contraseña</h4>
+                <div class="form-group">
+                  <label class="form-label">Contraseña Actual</label>
+                  <input type="password" class="form-input" placeholder="Ingresa tu contraseña actual">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Nueva Contraseña</label>
+                  <input type="password" class="form-input" placeholder="Ingresa tu nueva contraseña">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Confirmar Nueva Contraseña</label>
+                  <input type="password" class="form-input" placeholder="Confirma tu nueva contraseña">
+                </div>
+                <button class="btn btn-primary">Actualizar Contraseña</button>
+              </div>
+              <div>
+                <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 700; margin-bottom: 16px; color: var(--azul-profundo);">Preguntas de Seguridad</h4>
+                <div class="form-group">
+                  <label class="form-label">Pregunta 1</label>
+                  <select class="form-input">
+                    <option>¿Cuál es el nombre de tu primera mascota?</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Respuesta 1</label>
+                  <input type="text" class="form-input" placeholder="Tu respuesta">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Pregunta 2</label>
+                  <select class="form-input">
+                    <option>¿En qué ciudad nació tu madre?</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Respuesta 2</label>
+                  <input type="text" class="form-input" placeholder="Tu respuesta">
+                </div>
+                <button class="btn btn-success">Guardar Preguntas</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- WhatsApp Button -->
+  <a href="https://wa.me/584141234567" target="_blank" class="whatsapp-float">
+    <svg fill="currentColor" viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+  </a>
+
+  <!-- Instruction Modal -->
+  <div class="modal" id="instructionModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Dar Instrucción de Envío</h3>
+        <button class="modal-close" onclick="closeInstructionModal()">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Número de Tracking</label>
+          <input type="text" class="form-input" id="trackingNumber" placeholder="Ej: 1Z999AA1234567890">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo de Envío</label>
+          <select class="form-input" id="shippingType">
+            <option value="">Selecciona tipo de envío</option>
+            <option value="aereo">Aéreo Express (5-7 días)</option>
+            <option value="maritimo">Marítimo (20-25 días)</option>
+            <option value="terrestre">Terrestre (15-20 días)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Dirección de Entrega</label>
+          <input type="text" class="form-input" id="deliveryAddress" placeholder="Dirección completa">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Instrucciones Adicionales</label>
+          <textarea class="form-textarea" id="additionalInstructions" placeholder="Cualquier instrucción especial para tu envío"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeInstructionModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="submitInstruction()">Enviar Instrucción</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Mobile sidebar toggle
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('overlay').classList.toggle('active');
+    }
+
+    // Section navigation
+    function showSection(sectionName) {
+      // Hide all sections
+      document.querySelectorAll('.section-content').forEach(section => {
+        section.style.display = 'none';
+      });
+      
+      // Show selected section
+      const selectedSection = document.getElementById(sectionName + '-section');
+      if (selectedSection) {
+        selectedSection.style.display = 'block';
+      }
+      
+      // Update active nav item
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      event.target.closest('.nav-item').classList.add('active');
+      
+      // Update page title
+      const titles = {
+        'dashboard': 'Mi Dashboard',
+        'paquetes': 'Mis Paquetes',
+        'instrucciones': 'Instrucciones de Envío',
+        'recursos': 'Recursos Educativos',
+        'perfil': 'Mi Perfil',
+        'seguridad': 'Seguridad'
+      };
+      document.getElementById('page-title').textContent = titles[sectionName] || 'Mi Dashboard';
+      
+      // Close mobile sidebar
+      if (window.innerWidth <= 1024) {
+        toggleSidebar();
+      }
+    }
+
+    // Modal functions
+    function openInstructionModal() {
+      document.getElementById('instructionModal').classList.add('active');
+    }
+
+    function closeInstructionModal() {
+      document.getElementById('instructionModal').classList.remove('active');
+    }
+
+    function submitInstruction() {
+      const tracking = document.getElementById('trackingNumber').value;
+      const type = document.getElementById('shippingType').value;
+      const address = document.getElementById('deliveryAddress').value;
+      const instructions = document.getElementById('additionalInstructions').value;
+      
+      if (!tracking || !type || !address) {
+        alert('Por favor completa todos los campos requeridos');
+        return;
+      }
+      
+      // Simulate submission
+      alert('Instrucción enviada exitosamente. Nos pondremos en contacto contigo pronto.');
+      closeInstructionModal();
+      
+      // Clear form
+      document.getElementById('trackingNumber').value = '';
+      document.getElementById('shippingType').value = '';
+      document.getElementById('deliveryAddress').value = '';
+      document.getElementById('additionalInstructions').value = '';
+    }
+
+    // Close modal on outside click
+    document.getElementById('instructionModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeInstructionModal();
+      }
+    });
+  </script>
+</body>
+</html>
